@@ -1,0 +1,130 @@
+mutation DrakAndDrop($id: String!, $further_process: String!) {
+  ProspectiveStudentsProsessDrakAndDrop(
+    options: { id: $id, further_process: $further_process }
+  )
+}
+
+mutation MarkProspectiveStudent($id: String!, $mark: String!) {
+  markprospectivestudents(options: { id: $id, mark: $mark })
+}
+
+mutation NoteProspectiveStudents($id: String!, $note: String!) {
+  noteprospectivestudents(options: { id: $id, note: $note })
+}
+mutation RoleCgangeStatus($id: String!) {
+  RoleCgangeStatus(options: { id: $id }) {
+    role_id
+    role_status
+    role
+  }
+}
+
+mutation submenuSubmit(
+  $role_id: String!
+  $sub_name_menu: String!
+  $menu_name: String!
+  $url: String!
+) {
+  submenusubmit(
+    options: {
+      role_id: $role_id
+      sub_name_menu: $sub_name_menu
+      menu_name: $menu_name
+      url: $url
+    }
+  ) {
+    submenu_id
+    id_menu
+    id_path
+    sub_name_menu
+    createdAt
+    updatedAt
+  }
+}
+
+mutation menuSubmit(
+  $id_path: String!
+  $role_id: String!
+  $menu_name: String!
+  $menu_icon: String!
+  $menu_type: String!
+  $menu_status: String!
+) {
+  menusubmit(
+    options: {
+      id_path: $id_path
+      role_id: $role_id
+      menu_name: $menu_name
+      menu_icon: $menu_icon
+      menu_type: $menu_type
+      menu_status: $menu_status
+    }
+  ) {
+    menu_id
+    id_path
+    role_id
+    menu_name
+    menu_icon
+    menu_status
+    menu_type
+  }
+}
+mutation NewDataUser(
+  $username: String!
+  $password: String!
+  $email: String!
+  $role_id: String!
+) {
+  newuser(
+    options: {
+      username: $username
+      password: $password
+      email: $email
+      role_id: $role_id
+    }
+  ) {
+    user_id
+    username
+    email
+    role_id
+  }
+}
+mutation MarkMoneyMovement($id: String!, $mark: String!) {
+  markmoneymovement(options: { id: $id, mark: $mark }) {
+    money_movement_id
+    mark
+  }
+}
+
+mutation PostedkMoneyMovement($id: String!) {
+  postedmoneymovement(options: { id: $id }) {
+    money_movement_id
+    posted
+  }
+}
+mutation ChangeReturnAmountMoney($id: String!, $mark: String!) {
+  changereturnamountmoney(options: { id: $id, mark: $mark }) {
+    money_movement_id
+  }
+}
+
+mutation SubmitAccount($account: String!, $desc: String!) {
+  submitaccount(options: { account: $account, desc: $desc }) {
+    account_id
+    account_value
+    createdAt
+    updatedAt
+  }
+}
+mutation SubmitUpdateAccount($id: String!, $account: String!, $desc: String!) {
+  submitupdateaccount(options: { id: $id, account: $account, desc: $desc }) {
+    account_id
+    account_value
+    createdAt
+    updatedAt
+  }
+}
+
+mutation RemoveAccount($id: String!) {
+  removeaccountone(options: { id: $id })
+}

@@ -1,0 +1,73 @@
+mutation LisMajorRegisterState($id_class_campus: String!) {
+  ListMajorsRegister(options: { id_class_campus: $id_class_campus }) {
+    list_major_id
+    major
+    major_image
+    major_desc
+  }
+}
+
+mutation RegistrationTransactionsCreate($id_payment: String!) {
+  RegistrationTransactionsCreate(options: { id_payment: $id_payment }) {
+    errors {
+      message
+    }
+    tr_id
+    reg_code
+    va_number
+    amount
+    expired
+  }
+}
+mutation MutRegistrationSubmit(
+  $full_name: String!
+  $place_of_birth: String!
+  $date_of_birth: String!
+  $gender: String!
+  $email: String!
+  $phone_number: String!
+  $school_origin: String!
+  $address: String!
+  $postal_code_number: String!
+  $parents_name: String!
+  $house_phone_number: String!
+  $id_school_year: String!
+  $graduation_year: String!
+  $parents_profession: String!
+  $id_education_list: String!
+  $id_district_or_city: String!
+  $id_religion: String!
+  $id_source_info: String!
+  $id_wave_register: String!
+  $id_major: String!
+  $id_presenter: String!
+) {
+  RegistrationSubmit(
+    options: {
+      full_name: $full_name
+      place_of_birth: $place_of_birth
+      date_of_birth: $date_of_birth
+      gender: $gender
+      email: $email
+      phone_number: $phone_number
+      school_origin: $school_origin
+      address: $address
+      postal_code_number: $postal_code_number
+      parents_name: $parents_name
+      house_phone_number: $house_phone_number
+      graduation_year: $graduation_year
+      id_school_year: $id_school_year
+      parents_profession: $parents_profession
+      id_education_list: $id_education_list
+      id_district_or_city: $id_district_or_city
+      id_religion: $id_religion
+      id_source_info: $id_source_info
+      id_wave_register: $id_wave_register
+      id_major: $id_major
+      id_presenter: $id_presenter
+    }
+  ) {
+    reg_code
+    concerned_id
+  }
+}

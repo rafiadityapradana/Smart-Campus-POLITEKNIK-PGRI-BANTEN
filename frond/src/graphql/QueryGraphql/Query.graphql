@@ -1,0 +1,422 @@
+query UsersData {
+  users {
+    user_id
+    username
+    email
+    user_photo
+    user_status
+    role_id
+    role
+  }
+}
+
+query ListProvinces {
+  Provinces {
+    province_id
+    province_name
+  }
+}
+
+query ProspectiveStudentsProsessWaiting {
+  ProspectiveStudentsProsessWaiting {
+    prospective_students_id
+    reg_code
+    full_name
+    phone_number
+    school_origin
+  }
+}
+
+query ProspectiveStudentsProsessWrite {
+  ProspectiveStudentsProsessWrite {
+    prospective_students_id
+    reg_code
+    full_name
+    phone_number
+    school_origin
+  }
+}
+query ProspectiveStudentsProsessInterview {
+  ProspectiveStudentsProsessInterview {
+    prospective_students_id
+    reg_code
+    full_name
+    phone_number
+    school_origin
+  }
+}
+query ProspectiveStudentsProsessUniform {
+  ProspectiveStudentsProsessUniform {
+    prospective_students_id
+    reg_code
+    full_name
+    phone_number
+    school_origin
+  }
+}
+query ProspectiveStudentsProsessDone {
+  ProspectiveStudentsProsessDone {
+    prospective_students_id
+    reg_code
+    full_name
+    phone_number
+    school_origin
+  }
+}
+query RolesData {
+  roles {
+    role_id
+    role
+    role_status
+    createdAt
+    updatedAt
+  }
+}
+query paths {
+  paths {
+    path_url_id
+    url
+  }
+}
+query menulist($id: String!) {
+  menulist(options: { id: $id }) {
+    menu_id
+    role
+    menu_name
+    menu_icon
+    menu_type
+    url
+    menu_status
+  }
+}
+
+query submenulist($id: String!) {
+  submenulist(options: { id: $id }) {
+    submenu_id
+    id_menu
+    sub_name_menu
+    menu_name
+    url
+  }
+}
+
+query Dataprospectivestudents {
+  prospectivestudents {
+    prospective_students_id
+    reg_code
+    full_name
+    place_of_birth
+    date_of_birth
+    email
+    gender
+    phone_number
+    school_origin
+    address
+    postal_code_number
+    parents_name
+    house_phone_number
+    graduation_year
+    date_come
+    total_investment
+    registration_status
+    date_registration
+    dp_status
+    date_dp
+    amount_dp
+    school_year_value
+    profession
+    education
+    province_name
+    district_or_city_name
+    religion_name
+    source_information_name
+    wave
+    wave_desc
+    class_campus_name
+    major_code
+    major
+    presenter_name
+    further_process
+    date_finis_further_process
+    note
+    mark
+  }
+}
+query DataprospectivestudentsOne($id: String!) {
+  prospectivestudentsone(options: { id: $id }) {
+    prospective_students_id
+    reg_code
+    full_name
+    place_of_birth
+    date_of_birth
+    email
+    gender
+    phone_number
+    school_origin
+    address
+    postal_code_number
+    parents_name
+    house_phone_number
+    graduation_year
+    date_come
+    total_investment
+    registration_status
+    date_registration
+    dp_status
+    date_dp
+    amount_dp
+    school_year_value
+    profession
+    education
+    province_name
+    district_or_city_name
+    religion_name
+    source_information_name
+    wave
+    wave_desc
+    class_campus_name
+    major_code
+    major
+    presenter_name
+    further_process
+    date_finis_further_process
+    note
+    mark
+  }
+}
+query GetTransactions {
+  gettransaction {
+    transaction_id
+    id_payment
+    concerned_id
+    merchant_id
+    gross_amount
+    amount
+    va_number
+    currency
+    status_code
+    fraund_status
+    transaction_status
+    transaction_type
+    status_message
+    transaction_time
+    transaction_expired
+    signature_key
+    createdAt
+    updatedAt
+  }
+}
+query GetHistoryTransaction($id: String!) {
+  gethistorytransaction(options: { id: $id }) {
+    transaction_id
+    id_payment
+    concerned_id
+    merchant_id
+    gross_amount
+    amount
+    va_number
+    currency
+    status_code
+    fraund_status
+    transaction_status
+    transaction_type
+    status_message
+    transaction_time
+    transaction_expired
+    signature_key
+    createdAt
+    updatedAt
+  }
+}
+
+query TransactionOne($id: String!) {
+  trasactionone(options: { id: $id }) {
+    transaction_id
+    id_payment
+    concerned_id
+    merchant_id
+    gross_amount
+    amount
+    va_number
+    currency
+    status_code
+    fraund_status
+    transaction_status
+    transaction_type
+    status_message
+    transaction_time
+    transaction_expired
+    signature_key
+    destination_pay
+    payment_type
+    destination_name
+    destination_image
+    full_name
+    email
+    transaction_status
+    phone_number
+    gender
+    address
+  }
+}
+
+query GetAccount {
+  getaccount {
+    account_id
+    account_value
+    account_des
+  }
+}
+
+query GetAccountOne($id: String!) {
+  getaccountone(options: { id: $id }) {
+    account_id
+    account_value
+    account_des
+  }
+}
+
+query GetSubAccount($id: String!) {
+  subaccountwhereaccount(options: { id: $id }) {
+    sub_account_id
+    id_account
+    sub_account_value
+    sub_account_des
+  }
+}
+
+query GetAllSubAccount {
+  subaccountaccountall {
+    sub_account_id
+    id_account
+    sub_account_value
+    sub_account_des
+    account_value
+  }
+}
+
+query GetGroupAccount($id: String!) {
+  groupaccountwhereaccount(options: { id: $id }) {
+    group_account_id
+    id_sub_account
+    group_account_value
+    group_account_des
+  }
+}
+
+query MoneyMovementSum($id: String!, $from: String, $to: String) {
+  moneymovementsum(options: { id: $id, from: $from, to: $to }) {
+    blance
+    debit
+    kredit
+  }
+}
+
+query TotalMoneyMovementSum($from: String, $to: String) {
+  totalmoneymovementsum(options: { from: $from, to: $to }) {
+    blance
+    debit
+    kredit
+  }
+}
+
+query Ledger($from: String, $to: String) {
+  ledger(options: { from: $from, to: $to }) {
+    money_movement_id
+    connected
+    posted
+    account
+    ref
+    proof
+    amount
+    return_amount
+    money_movement_des
+    money_movement_type
+    group_account_value
+    group_account_des
+    mark
+    created_at
+    updated_at
+  }
+}
+
+query MoneyMovement($from: String, $to: String) {
+  moneymovement(options: { from: $from, to: $to }) {
+    money_movement_id
+    connected
+    posted
+    account
+    ref
+    proof
+    amount
+    return_amount
+    money_movement_des
+    money_movement_type
+    group_account_value
+    group_account_des
+    mark
+    created_at
+    updated_at
+  }
+}
+
+query MoneyMovementHistory($id: String!) {
+  moneymovementhistory(options: { id: $id }) {
+    money_movement_id
+    connected
+    posted
+    account
+    ref
+    proof
+    amount
+    return_amount
+    money_movement_des
+    money_movement_type
+    group_account_value
+    group_account_des
+    mark
+    created_at
+    updated_at
+  }
+}
+
+query MoneyMovementOne($id: String!) {
+  moneymovementone(options: { id: $id }) {
+    money_movement {
+      money_movement_id
+      connected
+      posted
+      account
+      ref
+      proof
+      amount
+      return_amount
+      money_movement_des
+      money_movement_type
+      group_account_value
+      group_account_des
+      mark
+      created_at
+      updated_at
+    }
+    connected_value {
+      full_name
+      email
+      phone_number
+      gender
+      address
+      place_of_birth
+      date_of_birth
+      school_year_value
+      profession
+      province_name
+      district_or_city_name
+      religion_name
+      class_campus_name
+      major_code
+      major
+      class_name
+      total_investment
+    }
+  }
+}

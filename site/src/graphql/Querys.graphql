@@ -1,0 +1,141 @@
+query ListMajorSite {
+  ListMajorSite {
+    list_major_id
+    major
+    major_image
+    major_desc
+  }
+}
+query ListProvinces {
+  Provinces {
+    province_id
+    province_name
+  }
+}
+query ListPresenters {
+  Presenters {
+    presenter_name
+    presenter_photo
+    presenter_id
+  }
+}
+query ListClassOpenRegister {
+  ClassOpenRegister {
+    class_campus_id
+    class_campus_name
+  }
+}
+query WaveRegisteration {
+  WavetRegister {
+    wave_registration_id
+    wave
+  }
+}
+query ReligionRegister {
+  ReligionRegister {
+    religion_id
+    religion_name
+  }
+}
+query SourceInfo {
+  SourceInfo {
+    source_id
+    source_information_name
+  }
+}
+query Profession {
+  Profession {
+    profession_id
+    profession
+  }
+}
+query WavetRegister {
+  WavetRegister {
+    wave_registration_id
+    wave
+    wave_desc
+  }
+}
+query SchoolYearRegister {
+  SchoolYearRegister {
+    school_year_id
+    school_year_value
+    status_school_year
+  }
+}
+query EducationListRegister {
+  EducationListRegister {
+    education_list_id
+    education
+  }
+}
+query prospectiveInfo {
+  prospectiveInfo {
+    prospective_students_id
+    reg_code
+    id_class_campus
+    class_campus
+    wave
+    wave_desc
+    year
+  }
+}
+
+query paymenttypes {
+  paymenttypes {
+    payment_id
+    payment_type
+    destination_pay
+    destination_name
+    destination_image
+  }
+}
+query totalPrices($id: String!) {
+  totalPrices(options: { id: $id }) {
+    Total
+    discount
+    TotAndDis
+  }
+}
+query TransactionsState($id: String!) {
+  TransactionsState(options: { id: $id }) {
+    transaction_id
+    concerned_id
+    amount
+    va_number
+    currency
+    merchant_id
+    payment_type
+    destination_pay
+    destination_name
+
+    transaction_expired
+  }
+}
+query SourceInfoOne($id: String!) {
+  SourceInfoOne(options: { id: $id }) {
+    source_id
+    source_information_name
+  }
+}
+query DistrictFromProv($province_id: String!) {
+  ProvinceDistrict(options: { province_id: $province_id }) {
+    district_or_city_id
+    district_or_city_name
+  }
+}
+
+query majorFromClassCampus($id_class_campus: String!) {
+  majorFromClassCampus(options: { id_class_campus: $id_class_campus }) {
+    list_major_id
+    major
+  }
+}
+
+query ListPricesRegister($id_major: String!) {
+  ListPricesRegister(options: { id_major: $id_major }) {
+    list_price_id
+    list_price_desc
+    list_price_value
+  }
+}

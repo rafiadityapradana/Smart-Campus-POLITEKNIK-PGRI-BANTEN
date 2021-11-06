@@ -1,0 +1,59 @@
+mutation AuthLogin($username: String!, $password: String!) {
+  login(options: { username: $username, password: $password }) {
+    errors {
+      message
+    }
+    user {
+      user_id
+      username
+      email
+      name
+      user_photo
+      user_status
+      role
+    }
+    token {
+      token_id
+      accessToken
+      refreshToken
+    }
+  }
+}
+mutation Logout {
+  logout
+}
+query AuthQueryData {
+  userdataAuth {
+    user {
+      user_id
+      username
+      email
+      name
+      user_photo
+      user_status
+      role
+    }
+    token {
+      token_id
+      accessToken
+      refreshToken
+    }
+  }
+}
+query MenuAppStateUsers {
+  menus {
+    menu_id
+    menu_name
+    menu_icon
+    url
+    menu_type
+  }
+}
+query Submenu($id: String!) {
+  submenu(options: { id: $id }) {
+    submenu_id
+    id_menu
+    sub_name_menu
+    url
+  }
+}

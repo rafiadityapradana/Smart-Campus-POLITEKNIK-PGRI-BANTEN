@@ -1,0 +1,2007 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.1
+-- Dumped by pg_dump version 13.1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: account; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.account (
+    account_id character varying(80) NOT NULL,
+    account_value character varying(50) NOT NULL,
+    account_des character varying(50) NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.account OWNER TO postgres;
+
+--
+-- Name: auth_user_tokens; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_user_tokens (
+    token_id character varying(80) NOT NULL,
+    user_id character varying(80) NOT NULL,
+    token text NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_tokens OWNER TO postgres;
+
+--
+-- Name: class_campus; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.class_campus (
+    class_campus_id character varying(80) NOT NULL,
+    class_campus_name character varying(80) NOT NULL,
+    class_campus_status text DEFAULT 'Disable'::text NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.class_campus OWNER TO postgres;
+
+--
+-- Name: classes_learning; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.classes_learning (
+    class_learning_id character varying(80) NOT NULL,
+    id_major character varying(50) NOT NULL,
+    class_name character varying(50) NOT NULL,
+    class_status character varying(50) DEFAULT 'Disable'::character varying NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.classes_learning OWNER TO postgres;
+
+--
+-- Name: college_students; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.college_students (
+    college_student_id character varying(80) NOT NULL,
+    nim integer NOT NULL,
+    full_name character varying(200) NOT NULL,
+    place_of_birth character varying(200) NOT NULL,
+    date_of_birth timestamp(0) with time zone NOT NULL,
+    gender text DEFAULT 'Male'::text NOT NULL,
+    email character varying(150),
+    phone_number character varying(20) NOT NULL,
+    school_origin character varying(200) NOT NULL,
+    address text NOT NULL,
+    postal_code_number character varying(10),
+    parents_name character varying(200) NOT NULL,
+    house_phone_number character varying(20),
+    total_investment character varying(200) DEFAULT 0 NOT NULL,
+    id_school_year character varying(80) NOT NULL,
+    parents_profession character varying(80) NOT NULL,
+    id_district_or_city character varying(80) NOT NULL,
+    id_religion character varying(80) NOT NULL,
+    id_class_learning character varying(80) NOT NULL,
+    note text,
+    mark character varying(10) DEFAULT 'No'::character varying NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL,
+    id_education_list character varying(80) NOT NULL
+);
+
+
+ALTER TABLE public.college_students OWNER TO postgres;
+
+--
+-- Name: discounts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.discounts (
+    discounts_id character varying(80) NOT NULL,
+    id_wave character varying(80) NOT NULL,
+    id_major character varying(80) NOT NULL,
+    discount_value integer NOT NULL,
+    discount_status text DEFAULT 'Disable'::text NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.discounts OWNER TO postgres;
+
+--
+-- Name: district; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.district (
+    district_or_city_id character varying(80) NOT NULL,
+    province_id character varying(80) NOT NULL,
+    district_or_city_name character varying(100) NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.district OWNER TO postgres;
+
+--
+-- Name: education_list; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.education_list (
+    education_list_id character varying(80) NOT NULL,
+    education character varying(30) NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.education_list OWNER TO postgres;
+
+--
+-- Name: group_account; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.group_account (
+    group_account_id character varying(80) NOT NULL,
+    id_sub_account character varying(50) NOT NULL,
+    group_account_value character varying(50) NOT NULL,
+    group_account_des character varying(50) NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.group_account OWNER TO postgres;
+
+--
+-- Name: lecturer; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.lecturer (
+    lecturer_id character varying(80) NOT NULL,
+    no_registration integer NOT NULL,
+    nidn integer,
+    full_name character varying(200) NOT NULL,
+    title character varying(30),
+    academic_position character varying(100) DEFAULT '-'::character varying NOT NULL,
+    id_education_list character varying(80) NOT NULL,
+    study_program character varying(100) NOT NULL,
+    id_district_or_city character varying(80) NOT NULL,
+    id_religion character varying(80) NOT NULL,
+    place_of_birth character varying(200) NOT NULL,
+    date_of_birth timestamp(0) with time zone NOT NULL,
+    gender text DEFAULT 'Male'::text NOT NULL,
+    email character varying(100),
+    phone_number character varying(20),
+    address text NOT NULL,
+    postal_code_number character varying(10),
+    permanent boolean DEFAULT false NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.lecturer OWNER TO postgres;
+
+--
+-- Name: lesson_timetable; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.lesson_timetable (
+    lesson_timetable_id character varying(80) NOT NULL,
+    id_lecturer character varying(80) NOT NULL,
+    id_mk character varying(80) NOT NULL,
+    lesson_timetable_name character varying(200) NOT NULL,
+    lesson_timetable_status character varying(50) DEFAULT 'Disable'::character varying NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.lesson_timetable OWNER TO postgres;
+
+--
+-- Name: list_majors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.list_majors (
+    list_major_id character varying(80) NOT NULL,
+    id_class_campus character varying(80) NOT NULL,
+    major_code character varying(6) NOT NULL,
+    major character varying(80) NOT NULL,
+    list_major_status text DEFAULT 'Disable'::text NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL,
+    major_image character varying(200) DEFAULT '-'::character varying NOT NULL,
+    major_desc text DEFAULT '-'::text NOT NULL
+);
+
+
+ALTER TABLE public.list_majors OWNER TO postgres;
+
+--
+-- Name: list_price; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.list_price (
+    list_price_id character varying(80) NOT NULL,
+    id_major character varying(80) NOT NULL,
+    list_price_desc character varying(150) NOT NULL,
+    list_price_value integer NOT NULL,
+    list_price_status text DEFAULT 'Disable'::text NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.list_price OWNER TO postgres;
+
+--
+-- Name: menu; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.menu (
+    menu_id character varying(80) NOT NULL,
+    id_path character varying(80) NOT NULL,
+    role_id character varying(80) NOT NULL,
+    menu_name character varying(80) NOT NULL,
+    menu_icon character varying(80) NOT NULL,
+    menu_status character varying(80) DEFAULT 'Enable'::character varying NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL,
+    menu_type character varying(80) DEFAULT '-'::character varying NOT NULL
+);
+
+
+ALTER TABLE public.menu OWNER TO postgres;
+
+--
+-- Name: mikro_orm_migrations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.mikro_orm_migrations (
+    id integer NOT NULL,
+    name character varying(255),
+    executed_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.mikro_orm_migrations OWNER TO postgres;
+
+--
+-- Name: mikro_orm_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.mikro_orm_migrations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.mikro_orm_migrations_id_seq OWNER TO postgres;
+
+--
+-- Name: mikro_orm_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.mikro_orm_migrations_id_seq OWNED BY public.mikro_orm_migrations.id;
+
+
+--
+-- Name: mk; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.mk (
+    mk_id character varying(80) NOT NULL,
+    id_lesson character varying(80) NOT NULL,
+    mk_name character varying(50) NOT NULL,
+    mk_status character varying(50) DEFAULT 'Disable'::character varying NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.mk OWNER TO postgres;
+
+--
+-- Name: money_movement; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.money_movement (
+    money_movement_id character varying(80) NOT NULL,
+    account character varying(80) NOT NULL,
+    ref character varying(30),
+    proof character varying(80) NOT NULL,
+    amount integer NOT NULL,
+    money_movement_des character varying(200) NOT NULL,
+    money_movement_type character varying(10) NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL,
+    connected character varying(80),
+    movement_to_type character varying(30) DEFAULT 'Etc'::character varying NOT NULL,
+    mark character varying(30) DEFAULT 'No'::character varying NOT NULL,
+    posted boolean DEFAULT false NOT NULL,
+    return_amount integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.money_movement OWNER TO postgres;
+
+--
+-- Name: pathurl; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.pathurl (
+    path_url_id character varying(80) NOT NULL,
+    url character varying(80) NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.pathurl OWNER TO postgres;
+
+--
+-- Name: payments; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.payments (
+    payment_id character varying(80) NOT NULL,
+    payment_type character varying(50) NOT NULL,
+    destination_pay character varying(50) NOT NULL,
+    destination_name character varying(50) NOT NULL,
+    destination_image character varying(200) NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.payments OWNER TO postgres;
+
+--
+-- Name: presenter; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.presenter (
+    presenter_id character varying(80) NOT NULL,
+    presenter_name character varying(150) NOT NULL,
+    presenter_photo character varying(250) NOT NULL,
+    status_presenter text DEFAULT 'Disable'::text NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.presenter OWNER TO postgres;
+
+--
+-- Name: profession; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.profession (
+    profession_id character varying(80) NOT NULL,
+    profession character varying(100) NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.profession OWNER TO postgres;
+
+--
+-- Name: prospective_students; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.prospective_students (
+    prospective_students_id character varying(80) NOT NULL,
+    reg_code character varying(60) NOT NULL,
+    full_name character varying(200) NOT NULL,
+    place_of_birth character varying(200) NOT NULL,
+    date_of_birth timestamp(0) with time zone NOT NULL,
+    gender text DEFAULT 'Male'::text NOT NULL,
+    email character varying(150),
+    phone_number character varying(20) NOT NULL,
+    school_origin character varying(200) NOT NULL,
+    address text NOT NULL,
+    postal_code_number character varying(10),
+    parents_name character varying(200) NOT NULL,
+    house_phone_number character varying(20),
+    graduation_year character varying(6),
+    date_come timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    total_investment character varying(200) DEFAULT 0 NOT NULL,
+    registration_status text DEFAULT 'No'::text NOT NULL,
+    date_registration timestamp(0) with time zone,
+    dp_status text DEFAULT 'No'::text NOT NULL,
+    date_dp timestamp(0) with time zone,
+    amount_dp character varying(200) DEFAULT 0 NOT NULL,
+    id_school_year character varying(80) NOT NULL,
+    parents_profession character varying(80) NOT NULL,
+    id_education_list character varying(80) NOT NULL,
+    id_district_or_city character varying(80) NOT NULL,
+    id_religion character varying(80) NOT NULL,
+    id_source_info character varying(80) NOT NULL,
+    id_wave_register character varying(80) NOT NULL,
+    id_major character varying(80) NOT NULL,
+    id_presenter character varying(80),
+    note text,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL,
+    further_process character varying(80) DEFAULT '-'::character varying NOT NULL,
+    date_finis_further_process character varying(80),
+    mark character varying(10) DEFAULT 'No'::character varying NOT NULL
+);
+
+
+ALTER TABLE public.prospective_students OWNER TO postgres;
+
+--
+-- Name: province; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.province (
+    province_id character varying(80) NOT NULL,
+    province_name character varying(80) NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.province OWNER TO postgres;
+
+--
+-- Name: religion; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.religion (
+    religion_id character varying(80) NOT NULL,
+    religion_name character varying(80) NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.religion OWNER TO postgres;
+
+--
+-- Name: school_year; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.school_year (
+    school_year_id character varying(80) NOT NULL,
+    school_year_value character varying(80) NOT NULL,
+    status_school_year text DEFAULT 'Disable'::text NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.school_year OWNER TO postgres;
+
+--
+-- Name: source_information; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.source_information (
+    source_id character varying(80) NOT NULL,
+    source_information_name character varying(80) NOT NULL,
+    source_status text DEFAULT 'Disable'::text NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.source_information OWNER TO postgres;
+
+--
+-- Name: sub_account; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.sub_account (
+    sub_account_id character varying(80) NOT NULL,
+    id_account character varying(50) NOT NULL,
+    sub_account_value character varying(50) NOT NULL,
+    sub_account_des character varying(50) NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.sub_account OWNER TO postgres;
+
+--
+-- Name: submenu; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.submenu (
+    submenu_id character varying(80) NOT NULL,
+    id_menu character varying(80) NOT NULL,
+    id_path character varying(80) NOT NULL,
+    sub_name_menu character varying(80) NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.submenu OWNER TO postgres;
+
+--
+-- Name: transactions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.transactions (
+    transaction_id character varying(80) NOT NULL,
+    id_payment character varying(80) NOT NULL,
+    concerned_id character varying(80) NOT NULL,
+    merchant_id character varying(80) NOT NULL,
+    gross_amount character varying(100) NOT NULL,
+    amount character varying(100) NOT NULL,
+    va_number character varying(100) NOT NULL,
+    currency character varying(30) NOT NULL,
+    status_code character varying(5) NOT NULL,
+    fraund_status character varying(30) NOT NULL,
+    transaction_status text NOT NULL,
+    transaction_type text NOT NULL,
+    status_message text DEFAULT 'Etc'::text NOT NULL,
+    transaction_time timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    transaction_expired timestamp(0) with time zone NOT NULL,
+    signature_key text NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.transactions OWNER TO postgres;
+
+--
+-- Name: user_roles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.user_roles (
+    role_id character varying(80) NOT NULL,
+    role character varying(80) NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL,
+    role_status character varying(80) DEFAULT 'Enable'::character varying NOT NULL
+);
+
+
+ALTER TABLE public.user_roles OWNER TO postgres;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    user_id character varying(80) NOT NULL,
+    username character varying(80) NOT NULL,
+    email character varying(80) NOT NULL,
+    password character varying(255) NOT NULL,
+    photo character varying(255) DEFAULT 'NULL'::character varying NOT NULL,
+    user_status character varying(80) DEFAULT 'Disable'::character varying NOT NULL,
+    role_id character varying(80) NOT NULL,
+    id_lecturer character varying(80) DEFAULT '-'::character varying NOT NULL,
+    id_student character varying(80) DEFAULT '-'::character varying NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL,
+    name character varying(255) DEFAULT 'NULL'::character varying
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- Name: wave_registration; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.wave_registration (
+    wave_registration_id character varying(80) NOT NULL,
+    wave character varying(30) NOT NULL,
+    wave_desc text NOT NULL,
+    wave_status text DEFAULT 'Disable'::text NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT '2021-08-30 17:06:39.173825+07'::timestamp with time zone NOT NULL,
+    updated_at timestamp(0) with time zone NOT NULL
+);
+
+
+ALTER TABLE public.wave_registration OWNER TO postgres;
+
+--
+-- Name: mikro_orm_migrations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.mikro_orm_migrations ALTER COLUMN id SET DEFAULT nextval('public.mikro_orm_migrations_id_seq'::regclass);
+
+
+--
+-- Data for Name: account; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.account (account_id, account_value, account_des, created_at, updated_at) FROM stdin;
+id-b2e0f062-3b6b-4a8a-8e83-8cec981dc10n	4000	Pendapatan	2021-07-15 08:33:52+07	2021-07-15 08:33:52+07
+id-e2j0f062-3b6b-4a8a-8e83-8cec981dc10l	5000	Pengeluaran	2021-07-15 08:33:52+07	2021-07-15 08:33:52+07
+\.
+
+
+--
+-- Data for Name: auth_user_tokens; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_user_tokens (token_id, user_id, token, created_at, updated_at) FROM stdin;
+id-3cba7de9-f6ae-46bc-826b-8e778678e8ab	id-63ccef30-0aff-48a2-b60b-01f9ef1d5963	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiaWQtNjNjY2VmMzAtMGFmZi00OGEyLWI2MGItMDFmOWVmMWQ1OTYzIiwiaWF0IjoxNjI5NTU3Nzg5LCJleHAiOjE2Mjk2NDQxODl9.nRs8Wd9BTAk9A0HGc9aqtERU7v9Ac4tlObs1tJg6Kc4	2021-07-17 10:31:59+07	2021-08-21 21:56:29+07
+id-3e431c00-3e00-4240-8cb3-f811196d200c	id-1d5baf04-fe01-4896-bc6b-6b641f71ad79	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiaWQtMWQ1YmFmMDQtZmUwMS00ODk2LWJjNmItNmI2NDFmNzFhZDc5IiwiaWF0IjoxNjMwMjkwNjk5LCJleHAiOjE2MzAzNzcwOTl9.Et3DVnmmn7rOpJrnQ9fJ1OkCjDle8is3YL3IdJ9aPxs	2021-08-22 02:18:58+07	2021-08-30 09:31:40+07
+id-a32b8385-30c7-4c17-8239-ac083926a02c	id-37e6c4ab-fcb2-4068-a8ea-1ec56de0571d	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiaWQtMzdlNmM0YWItZmNiMi00MDY4LWE4ZWEtMWVjNTZkZTA1NzFkIiwiaWF0IjoxNjMwMzIyNDE5LCJleHAiOjE2MzA0MDg4MTl9.N9lmwY-RFWGF0P_FuK_OIbEvhDZ3am8GJGzRzzRfyZ8	2021-07-30 01:32:36+07	2021-08-30 18:20:19+07
+\.
+
+
+--
+-- Data for Name: class_campus; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.class_campus (class_campus_id, class_campus_name, class_campus_status, created_at, updated_at) FROM stdin;
+id-f28ccfd7-f52b-4f71-921f-0394ef1d6893	Non Reguler	Enable	2021-07-11 18:38:21+07	2021-07-11 18:38:25+07
+id-5900c482-31ef-4423-b28d-cbfad0081239	Reguler	Enable	2021-07-11 18:35:55+07	2021-07-11 18:36:23+07
+\.
+
+
+--
+-- Data for Name: classes_learning; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.classes_learning (class_learning_id, id_major, class_name, class_status, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: college_students; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.college_students (college_student_id, nim, full_name, place_of_birth, date_of_birth, gender, email, phone_number, school_origin, address, postal_code_number, parents_name, house_phone_number, total_investment, id_school_year, parents_profession, id_district_or_city, id_religion, id_class_learning, note, mark, created_at, updated_at, id_education_list) FROM stdin;
+\.
+
+
+--
+-- Data for Name: discounts; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.discounts (discounts_id, id_wave, id_major, discount_value, discount_status, created_at, updated_at) FROM stdin;
+id-bcb6b7c9-bbab-47c8-8883-76333f739968	id-d6f93547-c3b3-4d1a-b46b-3b8ce49b492f	id-c19e3988-d8a8-4ab5-b63b-df0d4542ee92	50	Enable	2021-07-12 11:20:50+07	2021-07-12 11:20:54+07
+\.
+
+
+--
+-- Data for Name: district; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.district (district_or_city_id, province_id, district_or_city_name, created_at, updated_at) FROM stdin;
+id-c142e496-38ee-4fa1-8954-49c9b9a6e1f2	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Aceh Barat	2021-07-09 02:18:49+07	2021-07-09 02:18:49+07
+id-3c7c8481-a268-40a6-af6e-0d0b88e1495f	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Aceh Barat Daya	2021-07-09 02:19:11+07	2021-07-09 02:19:11+07
+id-a2fd7c78-7a76-4d34-b3e4-4fbfc3cb0be5	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Aceh Besar	2021-07-09 02:19:26+07	2021-07-09 02:19:26+07
+id-acf585f0-fcfa-4928-8332-51c86330c3fe	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Aceh Jaya	2021-07-09 02:19:45+07	2021-07-09 02:19:45+07
+id-5d753f6c-ab01-4191-ae55-6d8b3944c4f2	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Aceh Selatan	2021-07-09 02:20:00+07	2021-07-09 02:20:00+07
+id-b64eb3ec-cc87-45c2-b09a-692565351b41	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Aceh Singkil	2021-07-09 02:20:17+07	2021-07-09 02:20:17+07
+id-c59a01d4-3eaa-4032-ae4e-2b423d38d19c	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Aceh Tamiang	2021-07-09 02:20:27+07	2021-07-09 02:20:27+07
+id-b6a6f5ac-244a-47b3-b8aa-e800c4097496	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Aceh Tengah	2021-07-09 02:20:38+07	2021-07-09 02:20:38+07
+id-19a8b862-943d-4f3d-b8f6-3a5cccfc17f7	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Aceh Tenggara	2021-07-09 02:20:52+07	2021-07-09 02:20:52+07
+id-bfc918d3-9a05-4fea-bfcc-c5973d105819	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Aceh Timur	2021-07-09 02:21:02+07	2021-07-09 02:21:02+07
+id-9e40a165-c923-4fbd-8e22-f1dec403b0e7	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Aceh Utara	2021-07-09 02:21:21+07	2021-07-09 02:21:21+07
+id-995f4940-b5d3-4764-b52c-64c46701911a	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Bener Meriah	2021-07-09 02:21:30+07	2021-07-09 02:21:30+07
+id-175ca131-ada4-4dae-88ec-04e0714bfd84	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Bireuen	2021-07-09 02:21:39+07	2021-07-09 02:21:39+07
+id-70e9735a-da44-4bbc-a252-c8e345f93a34	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Gayo Lues	2021-07-09 02:21:49+07	2021-07-09 02:21:49+07
+id-0b29a4dd-3a7c-4b06-9f5f-3047464cbff8	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Nagan Raya	2021-07-09 02:22:07+07	2021-07-09 02:22:07+07
+id-97f5a7c3-7484-49b8-be86-f797a7773a08	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Pidie	2021-07-09 02:22:16+07	2021-07-09 02:22:16+07
+id-f2009190-0b59-4cc2-998b-cb0d36ee8993	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Pidie Jaya	2021-07-09 02:22:26+07	2021-07-09 02:22:26+07
+id-f67339af-fa77-4232-b2ad-8b4a90c707f0	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kabupaten Simeulue	2021-07-09 02:22:39+07	2021-07-09 02:22:39+07
+id-26fc0d13-d139-497b-b367-9292143fe1c9	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kota Banda Aceh	2021-07-09 02:22:49+07	2021-07-09 02:22:49+07
+id-d4e268c1-3c04-4d3a-8677-a7b2758df154	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kota Langsa	2021-07-09 02:22:59+07	2021-07-09 02:22:59+07
+id-2eb0ccf7-9b3e-4447-9d15-1c6273ac0a66	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kota Lhokseumawe	2021-07-09 02:23:08+07	2021-07-09 02:23:08+07
+id-6b7c80ce-c46b-48fa-b764-63cb55b3906a	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kota Sabang	2021-07-09 02:23:21+07	2021-07-09 02:23:21+07
+id-59c90c2a-f492-44e3-9cc2-097e67c293ce	id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Kota Subulussalam	2021-07-09 02:23:50+07	2021-07-09 02:23:50+07
+id-4b9b2541-083d-4029-be6a-85deb4c5830d	id-eb565712-7a58-428f-ae35-08e92ddda931	Kabupaten Badung	2021-07-09 02:24:43+07	2021-07-09 02:24:43+07
+id-d19e7f11-ff19-477c-837b-894cf0306e83	id-eb565712-7a58-428f-ae35-08e92ddda931	Kabupaten Bangli	2021-07-09 02:24:52+07	2021-07-09 02:24:52+07
+id-dc9266d1-a999-407a-bc55-9adb799b73b2	id-eb565712-7a58-428f-ae35-08e92ddda931	Kabupaten Buleleng	2021-07-09 02:25:02+07	2021-07-09 02:25:02+07
+id-0e1eb0ce-2d5c-4e84-8317-7d03c614fb51	id-eb565712-7a58-428f-ae35-08e92ddda931	Kabupaten Gianyar	2021-07-09 02:25:16+07	2021-07-09 02:25:16+07
+id-49132daf-fb18-4e83-b20e-374dc8804e91	id-eb565712-7a58-428f-ae35-08e92ddda931	Kabupaten Jembrana	2021-07-09 02:25:31+07	2021-07-09 02:25:31+07
+id-0f798eb0-0259-44f0-8d98-76610a34351c	id-eb565712-7a58-428f-ae35-08e92ddda931	Kabupaten Karangasem	2021-07-09 02:25:41+07	2021-07-09 02:25:41+07
+id-5296e65d-af80-406d-8a34-0de835c5b6ca	id-eb565712-7a58-428f-ae35-08e92ddda931	Kabupaten Klungkung	2021-07-09 02:25:58+07	2021-07-09 02:25:58+07
+id-e6b04075-6219-4a11-bf0a-05127dc7c02e	id-eb565712-7a58-428f-ae35-08e92ddda931	Kabupaten Tabanan	2021-07-09 02:26:05+07	2021-07-09 02:26:05+07
+id-17e83762-4781-42d0-95f5-14579ec9d2f4	id-eb565712-7a58-428f-ae35-08e92ddda931	Kota Denpasar	2021-07-09 02:26:13+07	2021-07-09 02:26:13+07
+id-5b2333b8-8d98-4bb2-9011-1df540576cd7	id-fe8993b7-23aa-43e3-b8fc-343c68b87639	Kabupaten Bangka	2021-07-09 02:31:23+07	2021-07-09 02:31:23+07
+id-fdda4829-4c8b-4d73-b9dd-4679139929ae	id-fe8993b7-23aa-43e3-b8fc-343c68b87639	Kabupaten Bangka Barat	2021-07-09 02:31:32+07	2021-07-09 02:31:32+07
+id-c3a6f9cb-1340-4987-adf8-50fb6102b3ae	id-fe8993b7-23aa-43e3-b8fc-343c68b87639	Kabupaten Bangka Selatan	2021-07-09 02:31:44+07	2021-07-09 02:31:44+07
+id-382bceb8-daa3-4cbe-925b-e8a662a51a80	id-fe8993b7-23aa-43e3-b8fc-343c68b87639	Kabupaten Bangka Tengah	2021-07-09 02:31:58+07	2021-07-09 02:31:58+07
+id-c9abdd15-e48d-430e-a934-23c41529ded0	id-fe8993b7-23aa-43e3-b8fc-343c68b87639	Kabupaten Belitung	2021-07-09 02:32:09+07	2021-07-09 02:32:09+07
+id-a49f4e0a-7196-4342-8a7f-e20ba0f52c1d	id-fe8993b7-23aa-43e3-b8fc-343c68b87639	Kabupaten Belitung Timur	2021-07-09 02:32:19+07	2021-07-09 02:32:19+07
+id-a6e03187-fb6e-4089-8d62-79b24bab675b	id-fe8993b7-23aa-43e3-b8fc-343c68b87639	Kota Pangkalpinang	2021-07-09 02:32:27+07	2021-07-09 02:32:27+07
+id-400812d7-1776-462c-9eea-c87318e5a871	id-0646d08e-8016-408f-8ea0-4fa285e8e7bc	Kabupaten Lebak	2021-07-09 02:33:16+07	2021-07-09 02:33:16+07
+id-d6253b30-1cd7-417e-bbf0-4de12edcb369	id-0646d08e-8016-408f-8ea0-4fa285e8e7bc	Kabupaten Pandeglang	2021-07-09 02:33:26+07	2021-07-09 02:33:26+07
+id-84acf4a5-f827-4fb9-ab49-6dafc4132e69	id-0646d08e-8016-408f-8ea0-4fa285e8e7bc	Kabupaten Serang	2021-07-09 02:33:36+07	2021-07-09 02:33:36+07
+id-8dcc0b91-d474-4873-a670-8e1f2a73d75f	id-0646d08e-8016-408f-8ea0-4fa285e8e7bc	Kabupaten Tangerang	2021-07-09 02:33:44+07	2021-07-09 02:33:44+07
+id-ad01b934-4411-4c21-b49e-f67e1e115d81	id-0646d08e-8016-408f-8ea0-4fa285e8e7bc	Kota Cilegon	2021-07-09 02:33:52+07	2021-07-09 02:33:52+07
+id-01e9f326-fb42-4bb2-b1e5-0d4e01da01fc	id-0646d08e-8016-408f-8ea0-4fa285e8e7bc	Kota Serang	2021-07-09 02:34:01+07	2021-07-09 02:34:01+07
+id-efabe8fe-2bd1-4708-bf41-76086e5e7844	id-0646d08e-8016-408f-8ea0-4fa285e8e7bc	Kota Tangerang	2021-07-09 02:34:08+07	2021-07-09 02:34:08+07
+id-dad2f273-71f9-4aa8-b026-f0eb5874367b	id-0646d08e-8016-408f-8ea0-4fa285e8e7bc	Kota Tangerang Selatan	2021-07-09 02:35:09+07	2021-07-09 02:35:09+07
+id-3db3a81a-3115-44a8-ad85-34462e5fb033	id-923bb5a0-4fd9-403c-886b-bf76cd4ba42d	Kabupaten Bengkulu Selatan	2021-07-09 02:36:18+07	2021-07-09 02:36:18+07
+id-1f94cf8f-725e-4997-94b6-d3e7582ea59a	id-923bb5a0-4fd9-403c-886b-bf76cd4ba42d	Kabupaten Bengkulu Tengah	2021-07-09 02:36:29+07	2021-07-09 02:36:29+07
+id-ba0d6cdb-59eb-4a15-8355-1153da2fffa0	id-923bb5a0-4fd9-403c-886b-bf76cd4ba42d	Kabupaten Bengkulu Utara	2021-07-09 02:36:41+07	2021-07-09 02:36:41+07
+id-391a33c4-b5d8-405d-a47c-5a4fe95a290b	id-923bb5a0-4fd9-403c-886b-bf76cd4ba42d	Kabupaten Kaur	2021-07-09 02:36:58+07	2021-07-09 02:36:58+07
+id-22fcd2a5-486e-4706-847f-0d01e078b665	id-923bb5a0-4fd9-403c-886b-bf76cd4ba42d	Kabupaten Kepahiang	2021-07-09 02:37:07+07	2021-07-09 02:37:07+07
+id-31ebeb37-2990-44be-8f5c-b2ce5a96a39c	id-923bb5a0-4fd9-403c-886b-bf76cd4ba42d	Kabupaten Lebong	2021-07-09 02:37:15+07	2021-07-09 02:37:15+07
+id-b70cb369-fa34-4451-b233-694195e35460	id-923bb5a0-4fd9-403c-886b-bf76cd4ba42d	Kabupaten Mukomuko	2021-07-09 02:37:24+07	2021-07-09 02:37:24+07
+id-9d086d7d-fe36-4b51-b072-c85b00cedf9f	id-923bb5a0-4fd9-403c-886b-bf76cd4ba42d	Kabupaten Rejang Lebong	2021-07-09 02:37:32+07	2021-07-09 02:37:32+07
+id-2138558d-9770-40b1-b945-e869e1682681	id-923bb5a0-4fd9-403c-886b-bf76cd4ba42d	Kabupaten Seluma	2021-07-09 02:37:41+07	2021-07-09 02:37:41+07
+id-0a0cb551-f834-42db-a2f6-d70b58874435	id-923bb5a0-4fd9-403c-886b-bf76cd4ba42d	Kota Bengkulu	2021-07-09 02:37:50+07	2021-07-09 02:37:50+07
+id-cbc628b0-4600-4873-a45e-2acc988a7254	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Banjarnegara	2021-07-09 08:49:36+07	2021-07-09 08:49:36+07
+id-21307db0-807a-45ab-95b3-5563dabde8e5	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Banyumas	2021-07-09 08:49:49+07	2021-07-09 08:49:49+07
+id-c71856c1-d20f-42c4-8de6-4390c380598f	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Batang	2021-07-09 08:50:04+07	2021-07-09 08:50:04+07
+id-44260ec1-c08b-48a8-90d2-242dc1bb6bd9	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Blora	2021-07-09 08:50:12+07	2021-07-09 08:50:12+07
+id-5eaeff14-ece8-4ec7-849a-9fa777cbfb4e	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Boyolali	2021-07-09 08:50:21+07	2021-07-09 08:50:21+07
+id-cdf989fe-8f53-4cee-9c5c-24605512b7ba	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Brebes	2021-07-09 08:50:31+07	2021-07-09 08:50:31+07
+id-68e2eb0e-d984-4248-a571-9e13a3f8f32b	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Cilacap	2021-07-09 08:50:41+07	2021-07-09 08:50:41+07
+id-776b8947-7ccc-4368-a890-78672cae2a5d	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Demak	2021-07-09 08:50:52+07	2021-07-09 08:50:52+07
+id-6a0ef31c-07e1-45b4-beb7-557027525155	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Grobogan	2021-07-09 08:51:01+07	2021-07-09 08:51:01+07
+id-d0645a74-0b82-4e41-8d28-53cf733486c0	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Jepara	2021-07-09 08:51:10+07	2021-07-09 08:51:10+07
+id-92b1ac33-4606-492a-8972-3318b76dfdfa	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Karanganyar	2021-07-09 08:51:18+07	2021-07-09 08:51:18+07
+id-c2bcbb16-5084-4ebb-b5a2-87a2a522e9f9	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Kebumen	2021-07-09 08:51:29+07	2021-07-09 08:51:29+07
+id-f757af54-ed3f-4333-8441-05e8bcb33224	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Kendal	2021-07-09 08:51:40+07	2021-07-09 08:51:40+07
+id-af92e531-dfda-49b1-8b91-bdee66354db9	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Klaten	2021-07-09 08:51:48+07	2021-07-09 08:51:48+07
+id-96bf13aa-1ffe-4077-824b-5fcb8ab1de41	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Kudus	2021-07-09 08:51:57+07	2021-07-09 08:51:57+07
+id-4269e3cf-01ea-4efb-af65-552723786d7d	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Magelang	2021-07-09 08:52:10+07	2021-07-09 08:52:10+07
+id-bb5546f7-4880-419e-832b-10337ab5ad68	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Pati	2021-07-09 08:52:19+07	2021-07-09 08:52:19+07
+id-e8f0a2fb-fe33-46d0-84dd-60b306924b5d	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Pekalongan	2021-07-09 08:52:29+07	2021-07-09 08:52:29+07
+id-6dc5bae5-9b76-4d49-8d13-b3808d11bf86	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Pemalang	2021-07-09 08:52:41+07	2021-07-09 08:52:41+07
+id-b844290b-8b18-45c2-9fd0-589921d2ce20	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Purbalingga	2021-07-09 08:52:51+07	2021-07-09 08:52:51+07
+id-710aefe4-20be-49eb-8404-cf02cc641f97	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Purworejo	2021-07-09 08:53:04+07	2021-07-09 08:53:04+07
+id-36398a85-9675-4598-906f-a150e2412d98	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Rembang	2021-07-09 08:53:12+07	2021-07-09 08:53:12+07
+id-afe7b9f1-e13f-477d-8b45-60fe1c6d0a79	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Semarang	2021-07-09 08:53:19+07	2021-07-09 08:53:19+07
+id-f9e946ad-5698-464d-9a05-fb265f0dba40	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Sragen	2021-07-09 08:53:28+07	2021-07-09 08:53:28+07
+id-8d97e1ca-1acf-4004-a9b9-e6c276621388	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Sukoharjo	2021-07-09 08:53:36+07	2021-07-09 08:53:36+07
+id-95a98e1c-4b76-4ec3-9311-19fe02d5ae81	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Tegal	2021-07-09 08:53:46+07	2021-07-09 08:53:46+07
+id-5726ce1e-573a-4ca5-967a-3c180403436d	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Temanggung	2021-07-09 08:53:57+07	2021-07-09 08:53:57+07
+id-f8434ac4-71ab-49a3-acfc-bc05b9204de8	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Wonogiri	2021-07-09 08:54:08+07	2021-07-09 08:54:08+07
+id-75b70ea7-2adb-4229-80c2-fd865276a0b0	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kabupaten Wonosobo	2021-07-09 08:54:16+07	2021-07-09 08:54:16+07
+id-5e4a51ed-d064-404c-9290-0a49813af521	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kota Magelang	2021-07-09 08:54:27+07	2021-07-09 08:54:27+07
+id-a7ef1fb4-0af9-4394-8f91-cd1bf7ee40df	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kota Pekalongan	2021-07-09 08:54:39+07	2021-07-09 08:54:39+07
+id-3b57570b-d9e5-4104-846e-7e2eb67e739f	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kota Salatiga	2021-07-09 08:54:49+07	2021-07-09 08:54:49+07
+id-487d8a20-675e-4862-8f6f-7f4667ec569a	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kota Semarang	2021-07-09 08:54:56+07	2021-07-09 08:54:56+07
+id-3f675db1-b175-4df3-a9f9-4f360278912a	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kota Surakarta	2021-07-09 08:55:04+07	2021-07-09 08:55:04+07
+id-ea4f8701-9a24-4ee2-99a8-ec1f0771cffd	id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Kota Tegal	2021-07-09 08:55:09+07	2021-07-09 08:55:09+07
+id-f6c1d9be-2e51-45ce-8a4a-a8a13da68839	id-67534294-7521-4006-b802-50d86976c968	Kabupaten Barito Selatan	2021-07-09 09:44:28+07	2021-07-09 09:44:28+07
+id-a0bef35b-0f4d-4509-a11e-e70c25067ea4	id-67534294-7521-4006-b802-50d86976c968	Kabupaten Barito Timur	2021-07-09 09:44:42+07	2021-07-09 09:44:42+07
+id-f8bd7cb9-29b6-4720-9ee0-67e75a88e1d0	id-67534294-7521-4006-b802-50d86976c968	Kabupaten Barito Utara	2021-07-09 09:44:52+07	2021-07-09 09:44:52+07
+id-8e4f89c7-0a5b-4cc7-b2a5-7c0fb5e412fd	id-67534294-7521-4006-b802-50d86976c968	Kabupaten Gunung Mas	2021-07-09 09:45:03+07	2021-07-09 09:45:03+07
+id-d65a8711-1291-4bca-959f-6105d0ab650b	id-67534294-7521-4006-b802-50d86976c968	Kabupaten Kapuas	2021-07-09 09:45:13+07	2021-07-09 09:45:13+07
+id-3ec047b3-5e33-478d-aa88-3877af80ca8c	id-67534294-7521-4006-b802-50d86976c968	Kabupaten Katingan	2021-07-09 09:45:25+07	2021-07-09 09:45:25+07
+id-c33cce8d-d653-4c47-9106-5db28fe7df5a	id-67534294-7521-4006-b802-50d86976c968	Kabupaten Kotawaringin Barat	2021-07-09 09:45:35+07	2021-07-09 09:45:35+07
+id-0c2b5113-8e46-498f-bb28-04e0bab39311	id-67534294-7521-4006-b802-50d86976c968	Kabupaten Kotawaringin Timur	2021-07-09 09:45:42+07	2021-07-09 09:45:42+07
+id-a77f3eea-6a7e-472a-839d-a62cb76f260b	id-67534294-7521-4006-b802-50d86976c968	Kabupaten Lamandau	2021-07-09 09:45:52+07	2021-07-09 09:45:52+07
+id-3a84f962-32d7-4cdf-a433-d12665427825	id-67534294-7521-4006-b802-50d86976c968	Kabupaten Murung Raya	2021-07-09 09:46:03+07	2021-07-09 09:46:03+07
+id-d90a4ff8-f313-4038-8b86-6795f197f477	id-67534294-7521-4006-b802-50d86976c968	Kabupaten Pulang Pisau	2021-07-09 09:46:11+07	2021-07-09 09:46:11+07
+id-987be4c7-13c4-48fc-bcb7-0102ee62dfeb	id-67534294-7521-4006-b802-50d86976c968	Kabupaten Sukamara	2021-07-09 09:46:21+07	2021-07-09 09:46:21+07
+id-6b51e636-1316-422e-b789-9e8f0d20ac37	id-67534294-7521-4006-b802-50d86976c968	Kabupaten Seruyan	2021-07-09 09:46:28+07	2021-07-09 09:46:28+07
+id-e412cdb8-4562-4b3e-9408-8fbfdcbff168	id-67534294-7521-4006-b802-50d86976c968	Kota Palangka Raya	2021-07-09 09:46:35+07	2021-07-09 09:46:35+07
+id-e99a7083-7687-4149-80ca-de3344a0bebe	id-1566a265-84c1-43d3-8853-ba4c5968944a	Kabupaten Banggai	2021-07-09 09:48:11+07	2021-07-09 09:48:11+07
+id-26c791ae-a15a-4874-b231-f300345c4ac7	id-1566a265-84c1-43d3-8853-ba4c5968944a	Kabupaten Banggai Kepulauan	2021-07-09 09:48:20+07	2021-07-09 09:48:20+07
+id-fc42a2a4-fdab-4100-baf0-8411ca750774	id-1566a265-84c1-43d3-8853-ba4c5968944a	Kabupaten Banggai Laut	2021-07-09 09:48:27+07	2021-07-09 09:48:27+07
+id-f9381f0a-5fce-46a3-a971-9374b64c8820	id-1566a265-84c1-43d3-8853-ba4c5968944a	Kabupaten Buol	2021-07-09 09:48:34+07	2021-07-09 09:48:34+07
+id-8369d726-5b7d-4755-81e9-5f155afb9a73	id-1566a265-84c1-43d3-8853-ba4c5968944a	Kabupaten Donggala	2021-07-09 09:48:41+07	2021-07-09 09:48:41+07
+id-d9b22bdf-7cfd-4dc1-96e6-6af2e1cca6b8	id-1566a265-84c1-43d3-8853-ba4c5968944a	Kabupaten Morowali	2021-07-09 09:48:48+07	2021-07-09 09:48:48+07
+id-cdd0d5c3-cff9-423b-b97e-6eaf716beb78	id-1566a265-84c1-43d3-8853-ba4c5968944a	Kabupaten Morowali Utara	2021-07-09 09:48:57+07	2021-07-09 09:48:57+07
+id-480e0e10-8924-4e0b-9472-1c2562b32491	id-1566a265-84c1-43d3-8853-ba4c5968944a	Kabupaten Parigi Moutong	2021-07-09 09:49:04+07	2021-07-09 09:49:04+07
+id-255a9b5d-9803-4558-a388-924e386ee271	id-1566a265-84c1-43d3-8853-ba4c5968944a	Kabupaten Poso	2021-07-09 09:49:14+07	2021-07-09 09:49:14+07
+id-cf69d3ac-ba75-43f3-88c4-c8ecc227658a	id-1566a265-84c1-43d3-8853-ba4c5968944a	Kabupaten Sigi	2021-07-09 09:49:22+07	2021-07-09 09:49:22+07
+id-d92afc58-19e4-4b82-a4a3-6fcf4d4de4bf	id-1566a265-84c1-43d3-8853-ba4c5968944a	Kabupaten Tojo Una-Una	2021-07-09 09:49:38+07	2021-07-09 09:49:38+07
+id-38f06e5e-a449-4785-bcfa-4a6fed1b586e	id-1566a265-84c1-43d3-8853-ba4c5968944a	Kabupaten Tolitoli	2021-07-09 09:49:45+07	2021-07-09 09:49:45+07
+id-6e082588-5a59-4ec7-af73-f74bb0bfd33f	id-1566a265-84c1-43d3-8853-ba4c5968944a	Kota Palu	2021-07-09 09:49:54+07	2021-07-09 09:49:54+07
+id-f0278ba9-4d62-444f-82ab-ab1d6725f67f	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Bangkalan	2021-07-09 09:56:29+07	2021-07-09 09:56:29+07
+id-46a01102-da79-49b7-aa65-405c79e67578	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Banyuwangi	2021-07-09 09:56:36+07	2021-07-09 09:56:36+07
+id-52cf2ae1-4051-4ce8-af39-a4b18ff9a6f7	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Blitar	2021-07-09 09:57:05+07	2021-07-09 09:57:05+07
+id-89468493-dea9-4dd1-b869-78fcb90c696d	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Bojonegoro	2021-07-09 09:57:16+07	2021-07-09 09:57:16+07
+id-0d5508f1-6bf9-46ca-90c5-8766c80af07a	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Bondowoso	2021-07-09 09:57:26+07	2021-07-09 09:57:26+07
+id-6f3efc48-1168-453e-b8aa-23f676a57b11	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Gresik	2021-07-09 09:57:34+07	2021-07-09 09:57:34+07
+id-1fb7acad-9209-4d0a-8b1b-5999c9f60e85	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Jember	2021-07-09 09:57:43+07	2021-07-09 09:57:43+07
+id-6287be25-11af-466f-b2c7-f7d25c52687b	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Jombang	2021-07-09 09:57:53+07	2021-07-09 09:57:53+07
+id-121c68d1-4830-4832-ba04-f71fcb39c3f8	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Kediri	2021-07-09 09:58:00+07	2021-07-09 09:58:00+07
+id-c947c795-95ab-4c03-bddc-7afbe83e2009	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Lamongan	2021-07-09 09:58:09+07	2021-07-09 09:58:09+07
+id-542410e2-c209-4dce-8b77-acec62fc4cc7	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Lumajang	2021-07-09 09:58:17+07	2021-07-09 09:58:17+07
+id-941741ab-a162-412d-ad82-fbef20c37492	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Madiun	2021-07-09 09:58:25+07	2021-07-09 09:58:25+07
+id-7f31d5b0-d39c-4b9e-b544-62eb600f668d	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Magetan	2021-07-09 09:58:36+07	2021-07-09 09:58:36+07
+id-f0061554-3fb9-4161-8bab-a2cd9aea71c4	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Malang	2021-07-09 09:59:13+07	2021-07-09 09:59:13+07
+id-2d027642-fe6c-4a23-8614-d22d5b88ea02	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Mojokerto	2021-07-09 09:59:21+07	2021-07-09 09:59:21+07
+id-35b3171f-ab90-41d0-9d55-1be6cffec683	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Nganjuk	2021-07-09 09:59:30+07	2021-07-09 09:59:30+07
+id-ceee1ebd-f71a-4531-b3ff-123768f691d2	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Ngawi	2021-07-09 09:59:39+07	2021-07-09 09:59:39+07
+id-cb44968c-d4bc-4ec2-8cd8-0d1026f5c8b8	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Pacitan	2021-07-09 09:59:47+07	2021-07-09 09:59:47+07
+id-6cd23b2c-fd67-42b7-9fdf-ed0158d3e18d	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Pamekasan	2021-07-09 09:59:56+07	2021-07-09 09:59:56+07
+id-277bd36f-33cb-4410-a44c-bbee701e6b66	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Pasuruan	2021-07-09 10:00:05+07	2021-07-09 10:00:05+07
+id-2e95c373-f2cf-4156-8805-23dec57343de	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Ponorogo	2021-07-09 10:00:15+07	2021-07-09 10:00:15+07
+id-6d4412e2-1718-495b-8b86-6707ddc06e01	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Probolinggo	2021-07-09 10:00:24+07	2021-07-09 10:00:24+07
+id-620e0e44-5d05-4374-8c44-bf8f57a97b68	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Sampang	2021-07-09 10:00:32+07	2021-07-09 10:00:32+07
+id-9b6d2cc4-e54e-4655-8a96-5acc27d1e26c	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Sidoarjo	2021-07-09 10:00:40+07	2021-07-09 10:00:40+07
+id-303cbe4c-3e2d-405d-8e7e-4dca7b5f030a	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Situbondo	2021-07-09 10:00:48+07	2021-07-09 10:00:48+07
+id-7d5cdc60-d19c-4839-b8a0-5e47e105e6d1	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Sumenep	2021-07-09 10:00:58+07	2021-07-09 10:00:58+07
+id-ebc428b5-7aa2-44aa-8d4c-f6d2c453c97b	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Trenggalek	2021-07-09 10:01:06+07	2021-07-09 10:01:06+07
+id-0cd0f34c-2c57-41da-9362-6527c9ad3948	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Tuban	2021-07-09 10:01:14+07	2021-07-09 10:01:14+07
+id-70efc228-42b2-4d98-80a5-abb9def07fd4	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kabupaten Tulungagung	2021-07-09 10:01:22+07	2021-07-09 10:01:22+07
+id-5514acdc-6311-435f-8b0b-d59be260c02c	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kota Batu	2021-07-09 10:01:31+07	2021-07-09 10:01:31+07
+id-a2c7681a-dc10-455b-a14d-38a76238af85	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kota Blitar	2021-07-09 10:01:38+07	2021-07-09 10:01:38+07
+id-3b1f85e3-56a5-432a-afb0-43f25d7811fa	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kota Kediri	2021-07-09 10:01:45+07	2021-07-09 10:01:45+07
+id-4c49d27e-c6dc-4479-a4e9-61d8cf038795	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kota Madiun	2021-07-09 10:01:55+07	2021-07-09 10:01:55+07
+id-4487a555-cd0f-4086-acaa-bcf396f2a6ba	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kota Malang	2021-07-09 10:02:04+07	2021-07-09 10:02:04+07
+id-3f25ae6a-8793-464d-a21c-ecb7c79ddb6e	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kota Mojokerto	2021-07-09 10:02:11+07	2021-07-09 10:02:11+07
+id-cc0cff89-6e12-44af-894a-12ff4e819250	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kota Pasuruan	2021-07-09 10:02:18+07	2021-07-09 10:02:18+07
+id-8a7d0cc3-9788-412f-b164-0fb9300092c0	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kota Probolinggo	2021-07-09 10:02:27+07	2021-07-09 10:02:27+07
+id-46e634ae-409d-492c-9b26-6668f77a3afc	id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Kota Surabaya	2021-07-09 10:02:36+07	2021-07-09 10:02:36+07
+id-387897cf-1538-4e73-b419-a840512dea3b	id-6da2ac5a-ed3f-4277-80b1-189cc8787d7d	Kabupaten Berau	2021-07-09 10:03:22+07	2021-07-09 10:03:22+07
+id-1ebfb7a5-abc9-4d1c-bd24-9611c8f3ae98	id-6da2ac5a-ed3f-4277-80b1-189cc8787d7d	Kabupaten Kutai Barat	2021-07-09 10:03:30+07	2021-07-09 10:03:30+07
+id-8b040ea3-882c-4094-81e1-d6e1c54cd701	id-6da2ac5a-ed3f-4277-80b1-189cc8787d7d	Kabupaten Kutai Kartanegara	2021-07-09 10:03:39+07	2021-07-09 10:03:39+07
+id-8596d2c8-7319-4c81-8924-6070c7ef2b4a	id-6da2ac5a-ed3f-4277-80b1-189cc8787d7d	Kabupaten Kutai Timur	2021-07-09 10:03:47+07	2021-07-09 10:03:47+07
+id-940118bc-ee9e-47fb-9ab2-a7b6515f1a1a	id-6da2ac5a-ed3f-4277-80b1-189cc8787d7d	Kabupaten Mahakam Ulu	2021-07-09 10:03:56+07	2021-07-09 10:03:56+07
+id-d84d4545-9e0b-4107-a162-834222da39b9	id-6da2ac5a-ed3f-4277-80b1-189cc8787d7d	Kabupaten Paser	2021-07-09 10:04:05+07	2021-07-09 10:04:05+07
+id-ad809965-c245-4848-abf9-edd166ab58ca	id-6da2ac5a-ed3f-4277-80b1-189cc8787d7d	Kabupaten Penajam Paser Utara	2021-07-09 10:04:14+07	2021-07-09 10:04:14+07
+id-02b60645-9648-46e5-ac6d-f8643d6aa8c1	id-6da2ac5a-ed3f-4277-80b1-189cc8787d7d	Kota Balikpapan	2021-07-09 10:04:25+07	2021-07-09 10:04:25+07
+id-71f34380-8053-44b2-979a-161c6765f62d	id-6da2ac5a-ed3f-4277-80b1-189cc8787d7d	Kota Bontang	2021-07-09 10:04:37+07	2021-07-09 10:04:37+07
+id-df00080b-144d-4a51-8537-e7f86304262f	id-6da2ac5a-ed3f-4277-80b1-189cc8787d7d	Kota Samarinda	2021-07-09 10:04:46+07	2021-07-09 10:04:46+07
+id-97abf51c-160c-4062-885d-a21279757646	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Alor	2021-07-09 10:05:46+07	2021-07-09 10:05:46+07
+id-a1eff483-c732-4fde-9a9d-dc53bfdc1dfe	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Belu	2021-07-09 10:05:54+07	2021-07-09 10:05:54+07
+id-c104f957-f8d2-48ac-8f23-03cc93b23270	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Ende	2021-07-09 10:06:03+07	2021-07-09 10:06:03+07
+id-db51b9ef-29f3-450a-a4c8-6a3b44596012	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Flores Timur	2021-07-09 10:06:11+07	2021-07-09 10:06:11+07
+id-3a5d1fa1-a46a-4ed5-8935-08f2df63ba60	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Kupang	2021-07-09 10:06:19+07	2021-07-09 10:06:19+07
+id-e8e90ec8-e21b-4454-986a-5407e5dd3755	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Lembata	2021-07-09 10:06:26+07	2021-07-09 10:06:26+07
+id-e7d86146-5abb-4088-acc2-1ecc3d1818ef	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Malaka	2021-07-09 10:06:35+07	2021-07-09 10:06:35+07
+id-999ec6fa-ce6f-4abd-a869-c8ee328467bf	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Manggarai	2021-07-09 10:06:43+07	2021-07-09 10:06:43+07
+id-321d4f45-04f6-4fa8-8657-ca3dad724eb1	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Manggarai Barat	2021-07-09 10:06:50+07	2021-07-09 10:06:50+07
+id-55613633-d11c-4b9f-975c-b3896476442a	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Manggarai Timur	2021-07-09 10:07:03+07	2021-07-09 10:07:03+07
+id-ad9531b6-d0e3-4573-867f-1fc2446f5572	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Nagekeo	2021-07-09 10:07:27+07	2021-07-09 10:07:27+07
+id-fb7eb2fd-d233-4ea7-91be-116af98ee1fa	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Ngada	2021-07-09 10:07:35+07	2021-07-09 10:07:35+07
+id-4060487d-034a-485e-889c-fc4792b87544	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Rote Ndao	2021-07-09 10:07:44+07	2021-07-09 10:07:44+07
+id-aab6d684-a160-4bac-a3f4-1b7438989c29	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Sabu Raijua	2021-07-09 10:07:54+07	2021-07-09 10:07:54+07
+id-4a5f766a-48dc-4c15-a595-57310701a9e3	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Sikka	2021-07-09 10:08:01+07	2021-07-09 10:08:01+07
+id-78681016-e8b8-4b97-9c76-592260025ee9	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Sumba Barat	2021-07-09 10:08:11+07	2021-07-09 10:08:11+07
+id-aec0b6bd-9ed9-443e-a694-fdcd4c77a930	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Sumba Barat Daya	2021-07-09 10:08:21+07	2021-07-09 10:08:21+07
+id-b5c9f5df-f9fd-4dea-ba18-58b506e1594e	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Sumba Tengah	2021-07-09 10:08:28+07	2021-07-09 10:08:28+07
+id-1cd99600-4bcb-492b-bfce-dee52281f966	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Sumba Timur	2021-07-09 10:08:41+07	2021-07-09 10:08:41+07
+id-0abe4f14-e056-41f1-bf02-0821c72c2a9f	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Timor Tengah Selatan	2021-07-09 10:08:50+07	2021-07-09 10:08:50+07
+id-405571c2-4f6c-42d7-82e0-a0efbc875767	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kabupaten Timor Tengah Utara	2021-07-09 10:08:57+07	2021-07-09 10:08:57+07
+id-e052d3aa-ee90-40a5-a51c-e5825178d08b	id-8abfbab6-c889-4156-8535-28460f41dd0b	Kota Kupang	2021-07-09 10:09:04+07	2021-07-09 10:09:04+07
+id-e3abeb3d-005b-4ac8-8926-56cd2188fabd	id-87ca9631-dfdf-48a7-b281-c8ddf97032cd	Kabupaten Boalemo	2021-07-09 10:11:48+07	2021-07-09 10:11:48+07
+id-b0f8c27f-350a-46f2-8abf-90c1291018f3	id-87ca9631-dfdf-48a7-b281-c8ddf97032cd	Kabupaten Bone Bolango	2021-07-09 10:11:57+07	2021-07-09 10:11:57+07
+id-624df1ca-d008-428d-8d1f-c231a2f50fc7	id-87ca9631-dfdf-48a7-b281-c8ddf97032cd	Kabupaten Gorontalo	2021-07-09 10:12:06+07	2021-07-09 10:12:06+07
+id-5183c6a7-201f-443b-9dfe-0ea0955fed87	id-87ca9631-dfdf-48a7-b281-c8ddf97032cd	Kabupaten Gorontalo Utara	2021-07-09 10:12:15+07	2021-07-09 10:12:15+07
+id-a66166b2-6c5a-4094-b3e9-69472618602c	id-87ca9631-dfdf-48a7-b281-c8ddf97032cd	Kabupaten Pohuwato	2021-07-09 10:12:23+07	2021-07-09 10:12:23+07
+id-7dee7a31-55d5-466e-bfc5-2190c66032e7	id-87ca9631-dfdf-48a7-b281-c8ddf97032cd	Kota Gorontalo	2021-07-09 10:12:31+07	2021-07-09 10:12:31+07
+id-a4a32a81-35de-453d-94fb-bd239f0932f5	id-dccf9b1a-5912-47e2-a5d4-2d4a71bd96e3	Kabupaten Administrasi Kepulauan Seribu	2021-07-09 10:13:57+07	2021-07-09 10:13:57+07
+id-c6ed5d7d-e1e0-4ad9-8074-5e0226796c5e	id-dccf9b1a-5912-47e2-a5d4-2d4a71bd96e3	Kota Administrasi Jakarta Barat	2021-07-09 10:14:06+07	2021-07-09 10:14:06+07
+id-ca92c9fa-5c06-462b-90b2-72c7602e0a9b	id-dccf9b1a-5912-47e2-a5d4-2d4a71bd96e3	Kota Administrasi Jakarta Pusat	2021-07-09 10:14:13+07	2021-07-09 10:14:13+07
+id-f9ac784c-1881-414f-bd4c-764de0cab5cb	id-dccf9b1a-5912-47e2-a5d4-2d4a71bd96e3	Kota Administrasi Jakarta Selatan	2021-07-09 10:14:22+07	2021-07-09 10:14:22+07
+id-359eb0cd-cd4e-43ae-8f74-cd9e20f8935a	id-dccf9b1a-5912-47e2-a5d4-2d4a71bd96e3	Kota Administrasi Jakarta Timur	2021-07-09 10:14:29+07	2021-07-09 10:14:29+07
+id-b4724b44-40b8-4465-b4f2-86e1b18f287b	id-dccf9b1a-5912-47e2-a5d4-2d4a71bd96e3	Kota Administrasi Jakarta Utara	2021-07-09 10:14:38+07	2021-07-09 10:14:38+07
+id-fcf32924-099d-4be6-926b-79accf28a394	id-c05bc25d-95c4-4b10-85d2-091437c64fd4	Kabupaten Batanghari	2021-07-09 10:15:59+07	2021-07-09 10:15:59+07
+id-1fd1df17-d8af-48a8-8a46-f72b457ea837	id-c05bc25d-95c4-4b10-85d2-091437c64fd4	Kabupaten Bungo	2021-07-09 10:16:04+07	2021-07-09 10:16:04+07
+id-8cf60f13-69bc-4309-9df3-40e29ec1304a	id-c05bc25d-95c4-4b10-85d2-091437c64fd4	Kabupaten Kerinci	2021-07-09 10:16:12+07	2021-07-09 10:16:12+07
+id-f59bd7ed-f4db-4c82-997a-628343f3c845	id-c05bc25d-95c4-4b10-85d2-091437c64fd4	Kabupaten Merangin	2021-07-09 10:16:19+07	2021-07-09 10:16:19+07
+id-9f49975a-a1c6-451a-baf2-c2e7f0ef2712	id-c05bc25d-95c4-4b10-85d2-091437c64fd4	Kabupaten Muaro Jambi	2021-07-09 10:16:27+07	2021-07-09 10:16:27+07
+id-34f746f7-708f-46e9-9c76-d60706b08803	id-c05bc25d-95c4-4b10-85d2-091437c64fd4	Kabupaten Sarolangun	2021-07-09 10:16:35+07	2021-07-09 10:16:35+07
+id-9e22aed1-bf49-4457-a8e8-f2f9730b190d	id-c05bc25d-95c4-4b10-85d2-091437c64fd4	Kabupaten Tanjung Jabung Barat	2021-07-09 10:16:43+07	2021-07-09 10:16:43+07
+id-97984d59-1479-4606-80b5-96bfc973497a	id-c05bc25d-95c4-4b10-85d2-091437c64fd4	Kabupaten Tanjung Jabung Timur	2021-07-09 10:16:49+07	2021-07-09 10:16:49+07
+id-fdc813ff-2ad7-484a-8176-a1c8207c5a08	id-c05bc25d-95c4-4b10-85d2-091437c64fd4	Kabupaten Tebo	2021-07-09 10:16:59+07	2021-07-09 10:16:59+07
+id-df08f41c-6188-412f-a452-bf670639dce3	id-c05bc25d-95c4-4b10-85d2-091437c64fd4	Kota Jambi	2021-07-09 10:17:05+07	2021-07-09 10:17:05+07
+id-39a5da25-415b-4c28-ad3e-4d7bbda7eb47	id-c05bc25d-95c4-4b10-85d2-091437c64fd4	Kota Sungai Penuh	2021-07-09 10:17:13+07	2021-07-09 10:17:13+07
+id-a6f7fc84-2968-4a4f-aac9-29cf8cf1d63d	id-107dc013-56de-49c6-a625-b65c407b6266	Kabupaten Lampung Barat	2021-07-09 10:18:16+07	2021-07-09 10:18:16+07
+id-555b8970-eee0-40aa-93d7-f73ee237825f	id-107dc013-56de-49c6-a625-b65c407b6266	Kabupaten Lampung Selatan	2021-07-09 10:18:25+07	2021-07-09 10:18:25+07
+id-435975c0-b8ce-4a0c-a78a-5a2d27e7f4f0	id-107dc013-56de-49c6-a625-b65c407b6266	Kabupaten Lampung Tengah	2021-07-09 10:18:32+07	2021-07-09 10:18:32+07
+id-e32b30be-64dc-4f84-b666-2bb1ba7e6b71	id-107dc013-56de-49c6-a625-b65c407b6266	Kabupaten Lampung Timur	2021-07-09 10:18:40+07	2021-07-09 10:18:40+07
+id-472bd7a8-08a5-4b43-af3f-ee64ff3d6cc1	id-107dc013-56de-49c6-a625-b65c407b6266	Kabupaten Lampung Utara	2021-07-09 10:18:48+07	2021-07-09 10:18:48+07
+id-01e7b0f2-5a4a-40ec-a59a-4d1693d1d9ca	id-107dc013-56de-49c6-a625-b65c407b6266	Kabupaten Mesuji	2021-07-09 10:18:58+07	2021-07-09 10:18:58+07
+id-06d646a3-2a29-4249-9b5e-c0461d507e53	id-107dc013-56de-49c6-a625-b65c407b6266	Kabupaten Pesawaran	2021-07-09 10:19:06+07	2021-07-09 10:19:06+07
+id-b14dae7c-4168-4bce-88b1-0de91b2ab9a8	id-107dc013-56de-49c6-a625-b65c407b6266	Kabupaten Pesisir Barat	2021-07-09 10:19:14+07	2021-07-09 10:19:14+07
+id-c8f22660-7db2-4185-be1d-a30eb46e16a2	id-107dc013-56de-49c6-a625-b65c407b6266	Kabupaten Pringsewu	2021-07-09 10:19:22+07	2021-07-09 10:19:22+07
+id-c9e3df83-a9ab-4db1-8354-4bd6fc057eb0	id-107dc013-56de-49c6-a625-b65c407b6266	Kabupaten Tanggamus	2021-07-09 10:19:29+07	2021-07-09 10:19:29+07
+id-26405889-213c-464c-8cb7-2cf66836bd08	id-107dc013-56de-49c6-a625-b65c407b6266	Kabupaten Tulang Bawang	2021-07-09 10:19:37+07	2021-07-09 10:19:37+07
+id-33e2ae55-9d3c-4ee0-aa7b-957e56499aab	id-107dc013-56de-49c6-a625-b65c407b6266	Kabupaten Tulang Bawang Barat	2021-07-09 10:19:45+07	2021-07-09 10:19:45+07
+id-9a9abd0f-4ee8-4720-8464-1e7f7b731c83	id-107dc013-56de-49c6-a625-b65c407b6266	Kabupaten Way Kanan	2021-07-09 10:19:53+07	2021-07-09 10:19:53+07
+id-7315bcad-37a3-4b0e-b152-0360bb40c34a	id-107dc013-56de-49c6-a625-b65c407b6266	Kota Bandar Lampung	2021-07-09 10:20:03+07	2021-07-09 10:20:03+07
+id-4a36d521-b117-440f-9f7d-66b65a20119d	id-107dc013-56de-49c6-a625-b65c407b6266	Kota Metro	2021-07-09 10:20:11+07	2021-07-09 10:20:11+07
+id-effebc45-ec3e-46e0-a070-d8e602bbc63d	id-00f65e00-09df-4fb0-85d4-3445ac9043c5	Kabupaten Buru	2021-07-09 10:21:04+07	2021-07-09 10:21:04+07
+id-03867668-7418-4485-993d-98e3c6dcb472	id-00f65e00-09df-4fb0-85d4-3445ac9043c5	Kabupaten Buru Selatan	2021-07-09 10:21:13+07	2021-07-09 10:21:13+07
+id-29a3fc53-4274-4ba4-b7b3-ed55995d4faf	id-00f65e00-09df-4fb0-85d4-3445ac9043c5	Kabupaten Kepulauan Aru	2021-07-09 10:21:23+07	2021-07-09 10:21:23+07
+id-dfd9b475-088e-47da-af02-b143ca410c68	id-00f65e00-09df-4fb0-85d4-3445ac9043c5	Kabupaten Kepulauan Tanimbar	2021-07-09 10:21:31+07	2021-07-09 10:21:31+07
+id-b9eaf7e2-85ee-4bfb-8d11-2e4cab73e8a1	id-00f65e00-09df-4fb0-85d4-3445ac9043c5	Kabupaten Maluku Barat Daya	2021-07-09 10:21:38+07	2021-07-09 10:21:38+07
+id-8e6580da-d3ac-46b0-9f0f-16bca82ea912	id-00f65e00-09df-4fb0-85d4-3445ac9043c5	Kabupaten Maluku Tengah	2021-07-09 10:21:46+07	2021-07-09 10:21:46+07
+id-76190254-1ff6-4782-ac05-a32ddb5eb322	id-00f65e00-09df-4fb0-85d4-3445ac9043c5	Kabupaten Maluku Tenggara	2021-07-09 10:21:55+07	2021-07-09 10:21:55+07
+id-9a775e2b-e3a2-48a8-99bb-89437d6b358e	id-00f65e00-09df-4fb0-85d4-3445ac9043c5	Kabupaten Seram Bagian Barat	2021-07-09 10:22:03+07	2021-07-09 10:22:03+07
+id-6179695f-4ee9-4f34-8789-57126716f6de	id-00f65e00-09df-4fb0-85d4-3445ac9043c5	Kabupaten Seram Bagian Timur	2021-07-09 10:22:10+07	2021-07-09 10:22:10+07
+id-1e60b081-38ed-4a79-b22c-05fdd1fd982c	id-00f65e00-09df-4fb0-85d4-3445ac9043c5	Kota Ambon	2021-07-09 10:22:18+07	2021-07-09 10:22:18+07
+id-c3385900-776c-42aa-ad91-e74da76fbe6e	id-00f65e00-09df-4fb0-85d4-3445ac9043c5	Kota Tual	2021-07-09 10:22:24+07	2021-07-09 10:22:24+07
+id-bfb90745-e64f-4329-84d1-4062d85484de	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kabupaten Bolaang Mongondow	2021-07-09 10:23:29+07	2021-07-09 10:23:29+07
+id-6031f1ef-8551-4abf-bc62-0c70f46186dd	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kabupaten Bolaang Mongondow Selatan	2021-07-09 10:23:38+07	2021-07-09 10:23:38+07
+id-0a9a8f6d-2537-4f9e-9f56-1b98d5874cf7	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kabupaten Bolaang Mongondow Timur	2021-07-09 10:23:46+07	2021-07-09 10:23:46+07
+id-4fc6f7c9-4031-4009-951b-ea409ca296c4	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kabupaten Bolaang Mongondow Utara	2021-07-09 10:23:56+07	2021-07-09 10:23:56+07
+id-8e9469f2-04be-48de-bc26-ac530b623e67	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kabupaten Kepulauan Sangihe	2021-07-09 10:24:05+07	2021-07-09 10:24:05+07
+id-aa2f57b0-a5d6-474d-a0de-b5ce963dbc71	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kabupaten Kepulauan Siau Tagulandang Biaro	2021-07-09 10:24:13+07	2021-07-09 10:24:13+07
+id-453fc799-5d7a-466b-a45b-ce097feb52eb	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kabupaten Kepulauan Talaud	2021-07-09 10:24:21+07	2021-07-09 10:24:21+07
+id-986d061d-59ce-4e2f-a8a5-6702235e0c7d	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kabupaten Minahasa	2021-07-09 10:24:28+07	2021-07-09 10:24:28+07
+id-84a895c0-534b-4efd-8600-ca221564db6b	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kabupaten Minahasa Selatan	2021-07-09 10:24:37+07	2021-07-09 10:24:37+07
+id-47c93066-bb55-4c50-b515-470abe42babc	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kabupaten Minahasa Tenggara	2021-07-09 10:24:44+07	2021-07-09 10:24:44+07
+id-2978cb6e-14f9-44b1-a293-8d91a82f126c	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kabupaten Minahasa Utara	2021-07-09 10:24:52+07	2021-07-09 10:24:52+07
+id-1a0c6d11-7eb1-4fb6-b34f-548a50e4eae2	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kota Bitung	2021-07-09 10:25:01+07	2021-07-09 10:25:01+07
+id-44a3475b-f13a-48a2-881f-79400706c12d	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kota Kotamobagu	2021-07-09 10:25:09+07	2021-07-09 10:25:09+07
+id-28123e83-fa01-4443-b472-446ceb41e1a2	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kota Manado	2021-07-09 10:25:18+07	2021-07-09 10:25:18+07
+id-3b430dfe-6e1f-436d-a640-ac2d86658424	id-2d947325-dcf6-4f37-8e5b-561eb544633e	Kota Tomohon	2021-07-09 10:25:27+07	2021-07-09 10:25:27+07
+id-a86f75a8-f0a5-4165-adc8-892b2e650d76	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Asahan	2021-07-09 10:26:27+07	2021-07-09 10:26:27+07
+id-154dd3a9-3805-46c0-ae1f-8e951131bc30	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Batu Bara	2021-07-09 10:26:35+07	2021-07-09 10:26:35+07
+id-9e590490-b63f-41d8-9c8b-438f90ae2d97	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Dairi	2021-07-09 10:26:43+07	2021-07-09 10:26:43+07
+id-eb937984-e13c-453e-bc79-8ef82bbb792e	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Deli Serdang	2021-07-09 10:26:51+07	2021-07-09 10:26:51+07
+id-ae435532-c35a-463e-8c87-ed7863acd34e	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Humbang Hasundutan	2021-07-09 10:26:59+07	2021-07-09 10:26:59+07
+id-e5edacb4-54c2-48dc-a82c-7082e2530d56	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Karo	2021-07-09 10:27:07+07	2021-07-09 10:27:07+07
+id-a624d1d0-be07-48a2-ba3c-73afdcdf0cb0	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Labuhanbatu	2021-07-09 10:27:18+07	2021-07-09 10:27:18+07
+id-833d8b2f-94db-4177-8de3-5d8aba6caacf	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Labuhanbatu Selatan	2021-07-09 10:27:25+07	2021-07-09 10:27:25+07
+id-4373d4a3-59c7-4453-a240-6a88d029ba84	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Labuhanbatu Utara	2021-07-09 10:27:32+07	2021-07-09 10:27:32+07
+id-5371ac36-c555-48ac-9813-6aa6ee243b37	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Langkat	2021-07-09 10:27:40+07	2021-07-09 10:27:40+07
+id-7075894d-b20d-4441-9c52-5e8b417e7936	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Mandailing Natal	2021-07-09 10:27:49+07	2021-07-09 10:27:49+07
+id-ba63dfc7-481f-4d0e-a2de-5303fc3c8db1	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Nias	2021-07-09 10:27:58+07	2021-07-09 10:27:58+07
+id-920b8abb-129d-4e73-9af0-a977b8f2242d	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Nias Barat	2021-07-09 10:28:05+07	2021-07-09 10:28:05+07
+id-c8400a7c-f8bd-4904-b6f6-331948209543	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Nias Selatan	2021-07-09 10:28:13+07	2021-07-09 10:28:13+07
+id-22791e80-3e3a-4939-a75d-bb2338ef2320	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Nias Utara	2021-07-09 10:28:21+07	2021-07-09 10:28:21+07
+id-b39ec3fe-0382-4361-bc05-d4f3741624a0	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Padang Lawas	2021-07-09 10:28:30+07	2021-07-09 10:28:30+07
+id-928224f7-da34-45e7-ae12-1c32a5036846	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Padang Lawas Utara	2021-07-09 10:28:38+07	2021-07-09 10:28:38+07
+id-a5f49d75-b417-427c-9f73-2e0196de95f8	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Pakpak Bharat	2021-07-09 10:28:46+07	2021-07-09 10:28:46+07
+id-08319b94-aa9c-420c-8f15-81ca6c889cb3	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Samosir	2021-07-09 10:28:53+07	2021-07-09 10:28:53+07
+id-8eecd554-40d3-4dd2-b543-5385197540ec	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Serdang Bedagai	2021-07-09 10:29:03+07	2021-07-09 10:29:03+07
+id-66c89c2c-09e7-4530-8a14-c97b724b0b86	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Simalungun	2021-07-09 10:29:12+07	2021-07-09 10:29:12+07
+id-aa75d6de-5922-47f9-a8ff-c54e899a3d46	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Tapanuli Selatan	2021-07-09 10:29:20+07	2021-07-09 10:29:20+07
+id-0c678fe8-3f1e-4908-aff0-f52069200887	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Tapanuli Tengah	2021-07-09 10:29:28+07	2021-07-09 10:29:28+07
+id-404e71eb-2aaf-47cf-a2b1-1569c27735ae	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Tapanuli Utara	2021-07-09 10:29:36+07	2021-07-09 10:29:36+07
+id-20b8220c-4c92-418a-a723-c7f47c2b985b	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kabupaten Toba	2021-07-09 10:29:43+07	2021-07-09 10:29:43+07
+id-95a20d7b-321d-4d94-be0d-2ce622de621a	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kota Binjai	2021-07-09 10:29:50+07	2021-07-09 10:29:50+07
+id-f268ef13-150b-4d06-8dcc-046e7e7f5ac1	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kota Gunungsitoli	2021-07-09 10:29:57+07	2021-07-09 10:29:57+07
+id-5852b6f0-c65c-4623-b9a9-f699a88b062b	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kota Medan	2021-07-09 10:30:08+07	2021-07-09 10:30:08+07
+id-2804788d-0db3-426d-8f77-78193f0ed0ab	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kota Padang Sidempuan	2021-07-09 10:30:16+07	2021-07-09 10:30:16+07
+id-29ff0419-117b-4f1a-ac97-d4a75e65b11d	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kota Pematangsiantar	2021-07-09 10:30:22+07	2021-07-09 10:30:22+07
+id-2ae18b2d-fda0-436e-aab4-4cead99c096f	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kota Sibolga	2021-07-09 10:30:29+07	2021-07-09 10:30:29+07
+id-942d9c17-f9c8-4512-adf9-6105d34d47d5	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kota Tanjungbalai	2021-07-09 10:30:36+07	2021-07-09 10:30:36+07
+id-15059734-253d-435a-9282-a9fad23cd881	id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Kota Tebing Tinggi	2021-07-09 10:30:43+07	2021-07-09 10:30:43+07
+id-5274a109-b374-4de7-be5e-6d585ed4fcdd	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Asmat	2021-07-09 10:31:52+07	2021-07-09 10:31:52+07
+id-2dbc0e77-e6e4-4ca8-bb81-a541f5508438	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Biak Numfor	2021-07-09 10:32:00+07	2021-07-09 10:32:00+07
+id-7d771db9-18c3-4734-b494-0a5247801dc7	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Boven Digoel	2021-07-09 10:32:09+07	2021-07-09 10:32:09+07
+id-671babe7-0231-4b70-956d-d37a2484d491	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Deiyai	2021-07-09 10:32:17+07	2021-07-09 10:32:17+07
+id-e3bf890d-b31b-4724-84d7-404d9bcfb7e3	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Dogiyai	2021-07-09 10:32:23+07	2021-07-09 10:32:23+07
+id-6303cee6-b16c-47a8-9590-55f0361888c0	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Intan Jaya	2021-07-09 10:32:30+07	2021-07-09 10:32:30+07
+id-744825f3-fe12-4ea3-b90c-d8d4baa4bbea	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Jayapura	2021-07-09 10:32:41+07	2021-07-09 10:32:41+07
+id-2fe50101-a7a9-45c2-90c9-21ce48374541	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Jayawijaya	2021-07-09 10:32:47+07	2021-07-09 10:32:47+07
+id-09fcafff-5f13-49ed-909c-51d15bb31599	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Keerom	2021-07-09 10:32:54+07	2021-07-09 10:32:54+07
+id-a32c9c59-c95a-46d7-b3c0-29e41b42f1f3	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Kepulauan Yapen	2021-07-09 10:33:03+07	2021-07-09 10:33:03+07
+id-e227611e-22c3-4b7d-916f-f8e477854176	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Lanny Jaya	2021-07-09 10:33:10+07	2021-07-09 10:33:10+07
+id-d4c4fa41-bb12-42ee-a00c-8587dd19ec6f	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Mamberamo Raya	2021-07-09 10:33:16+07	2021-07-09 10:33:16+07
+id-8f29cb1a-95a4-4b09-8dd7-6d435d270ca9	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Mamberamo Tengah	2021-07-09 10:33:23+07	2021-07-09 10:33:23+07
+id-a831ad05-63cc-4a97-ae3d-8ef6c4cd597a	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Mappi	2021-07-09 10:33:29+07	2021-07-09 10:33:29+07
+id-8d64be4f-c93e-430f-a00a-f0f7907c035f	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Merauke	2021-07-09 10:33:37+07	2021-07-09 10:33:37+07
+id-e6b98adc-c192-4329-9bab-95185ed7c0b5	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Mimika	2021-07-09 10:33:44+07	2021-07-09 10:33:44+07
+id-0d2bfbda-1b00-497b-b4e0-4aeda452ea08	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Nabire	2021-07-09 10:33:51+07	2021-07-09 10:33:51+07
+id-6e733d96-b5c7-402a-8826-217843415df8	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Nduga	2021-07-09 10:33:59+07	2021-07-09 10:33:59+07
+id-5debfc2a-5ca2-4470-9464-533b40ddb89d	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Paniai	2021-07-09 10:34:07+07	2021-07-09 10:34:07+07
+id-4bab4468-4780-4daf-a910-d5e4e6d4d58a	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Pegunungan Bintang	2021-07-09 10:34:15+07	2021-07-09 10:34:15+07
+id-9deb6cb7-207a-4d2a-bc77-ba111275a8f0	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Puncak	2021-07-09 10:34:24+07	2021-07-09 10:34:24+07
+id-3b44d953-031a-4e7b-b3a9-bf435b23f7db	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Puncak Jaya	2021-07-09 10:34:31+07	2021-07-09 10:34:31+07
+id-2e61d0d0-29a8-440b-b17a-fbaac5fc7499	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Sarmi	2021-07-09 10:34:38+07	2021-07-09 10:34:38+07
+id-eacaceee-a7aa-460d-8b73-c15b1305d32f	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Supiori	2021-07-09 10:34:46+07	2021-07-09 10:34:46+07
+id-1b1dc516-a937-4d8a-bc6d-75b2685f3159	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Tolikara	2021-07-09 10:34:54+07	2021-07-09 10:34:54+07
+id-9eb52d2a-cef9-4bba-b150-83a19e69708d	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Waropen	2021-07-09 10:35:03+07	2021-07-09 10:35:03+07
+id-b47740b2-6172-409f-8151-c9ce8deb9221	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Yahukimo	2021-07-09 10:35:10+07	2021-07-09 10:35:10+07
+id-75670288-3ec8-4aa1-8edf-123f7016f501	id-84380719-de16-43a9-af96-d714e8bc0387	Kabupaten Yalimo	2021-07-09 10:35:17+07	2021-07-09 10:35:17+07
+id-1d70eb9c-b708-4222-8477-b616c4e804a8	id-84380719-de16-43a9-af96-d714e8bc0387	Kota Jayapura	2021-07-09 10:35:24+07	2021-07-09 10:35:24+07
+id-65de6e9f-0f57-4d59-8e57-55d9f06d345d	id-b53e641a-58cb-436a-8606-f2901d37a6b5	Kabupaten Bengkalis	2021-07-09 10:36:03+07	2021-07-09 10:36:03+07
+id-64f1eea8-486d-4088-ab05-26084d802793	id-b53e641a-58cb-436a-8606-f2901d37a6b5	Kabupaten Indragiri Hilir	2021-07-09 10:36:12+07	2021-07-09 10:36:12+07
+id-92bf72c9-42ac-4969-ab29-bc1a7325b32a	id-b53e641a-58cb-436a-8606-f2901d37a6b5	Kabupaten Indragiri Hulu	2021-07-09 10:36:23+07	2021-07-09 10:36:23+07
+id-90f2f6a5-d325-41bb-895d-597454d63a7d	id-b53e641a-58cb-436a-8606-f2901d37a6b5	Kabupaten Kampar	2021-07-09 10:36:32+07	2021-07-09 10:36:32+07
+id-1a210fe8-92b8-458f-b4b3-b2dd253581c6	id-b53e641a-58cb-436a-8606-f2901d37a6b5	Kabupaten Kepulauan Meranti	2021-07-09 10:36:39+07	2021-07-09 10:36:39+07
+id-12058122-a8bd-41c5-95d3-8ac280c1f531	id-b53e641a-58cb-436a-8606-f2901d37a6b5	Kabupaten Kuantan Singingi	2021-07-09 10:36:46+07	2021-07-09 10:36:46+07
+id-cc97e497-bb5c-43c5-8d6b-6bdf24c567f2	id-b53e641a-58cb-436a-8606-f2901d37a6b5	Kabupaten Pelalawan	2021-07-09 10:36:53+07	2021-07-09 10:36:53+07
+id-3373c022-86cd-4fa1-8e09-87542ee61085	id-b53e641a-58cb-436a-8606-f2901d37a6b5	Kabupaten Rokan Hilir	2021-07-09 10:37:00+07	2021-07-09 10:37:00+07
+id-47ede4ec-f680-4072-808e-4f2136c26b25	id-b53e641a-58cb-436a-8606-f2901d37a6b5	Kabupaten Rokan Hulu	2021-07-09 10:37:06+07	2021-07-09 10:37:06+07
+id-faa1365f-550f-49dc-9b3a-afd0e596f8c2	id-b53e641a-58cb-436a-8606-f2901d37a6b5	Kabupaten Siak	2021-07-09 10:37:13+07	2021-07-09 10:37:13+07
+id-bc747236-9940-4add-839c-839144cb5288	id-b53e641a-58cb-436a-8606-f2901d37a6b5	Kota Dumai	2021-07-09 10:37:18+07	2021-07-09 10:37:18+07
+id-43acddb1-2b4f-4603-9629-4329a68dd1b3	id-b53e641a-58cb-436a-8606-f2901d37a6b5	Kota Pekanbaru	2021-07-09 10:37:26+07	2021-07-09 10:37:26+07
+id-72c6bcd6-fda9-40a2-9127-7d678587460b	id-e9652d27-c39f-419b-aca6-5258dea92abd	Kabupaten Bintan	2021-07-09 10:38:13+07	2021-07-09 10:38:13+07
+id-702447ea-ce6d-4ba6-a05d-b444b7b4b688	id-e9652d27-c39f-419b-aca6-5258dea92abd	Kabupaten Karimun	2021-07-09 10:38:20+07	2021-07-09 10:38:20+07
+id-0abedb1a-9830-45e1-a5be-62fbf0e4cee0	id-e9652d27-c39f-419b-aca6-5258dea92abd	Kabupaten Kepulauan Anambas	2021-07-09 10:38:28+07	2021-07-09 10:38:28+07
+id-79657468-d15f-4e71-b040-38c6b3fdf6c5	id-e9652d27-c39f-419b-aca6-5258dea92abd	Kabupaten Lingga	2021-07-09 10:38:35+07	2021-07-09 10:38:35+07
+id-b7bb6701-0087-4572-a0a8-8b31b046a6f9	id-e9652d27-c39f-419b-aca6-5258dea92abd	Kabupaten Natuna	2021-07-09 10:38:42+07	2021-07-09 10:38:42+07
+id-aed2d9e5-5121-423d-8c58-35f4a20aa506	id-e9652d27-c39f-419b-aca6-5258dea92abd	Kota Batam	2021-07-09 10:38:49+07	2021-07-09 10:38:49+07
+id-04c1ac38-579f-4daf-8dcf-9181eb973773	id-e9652d27-c39f-419b-aca6-5258dea92abd	Kota Tanjungpinang	2021-07-09 10:38:57+07	2021-07-09 10:38:57+07
+id-849b4b81-5791-4c84-8b98-0916c09d14b3	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Bombana	2021-07-09 10:39:42+07	2021-07-09 10:39:42+07
+id-958bb833-0043-44dc-bb28-64561127c0e7	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Buton	2021-07-09 10:39:50+07	2021-07-09 10:39:50+07
+id-3ae53d15-5328-4242-994a-65f929170342	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Buton Selatan	2021-07-09 10:39:59+07	2021-07-09 10:39:59+07
+id-b340feec-7860-4777-a0af-9d4dc5e6b049	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Buton Tengah	2021-07-09 10:40:09+07	2021-07-09 10:40:09+07
+id-a433578b-38b0-48d5-a87c-f464332b1ed4	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Buton Utara	2021-07-09 10:40:17+07	2021-07-09 10:40:17+07
+id-120878da-8458-4444-8b2f-f6a91061f58d	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Kolaka	2021-07-09 10:40:28+07	2021-07-09 10:40:28+07
+id-900b43bd-c879-4542-8c3f-59222b3012ab	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Kolaka Timur	2021-07-09 10:40:36+07	2021-07-09 10:40:36+07
+id-208fb10b-e4fb-4c6f-afa6-0162cc2aef80	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Kolaka Utara	2021-07-09 10:40:43+07	2021-07-09 10:40:43+07
+id-5209c415-871b-4eb7-b58b-55eedf7e26e3	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Konawe	2021-07-09 10:40:50+07	2021-07-09 10:40:50+07
+id-90a1636e-fab6-47f9-981f-1fea981835ee	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Konawe Kepulauan	2021-07-09 10:41:00+07	2021-07-09 10:41:00+07
+id-b5967849-c046-400b-b40c-a4e5bb53851e	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Konawe Selatan	2021-07-09 10:41:07+07	2021-07-09 10:41:07+07
+id-d70ef03f-a670-4e14-90c4-5811ad409db5	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Konawe Utara	2021-07-09 10:41:14+07	2021-07-09 10:41:14+07
+id-443c38d7-69f8-48de-9c42-1dca28a9ec1c	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Muna	2021-07-09 10:41:21+07	2021-07-09 10:41:21+07
+id-db4f578e-550a-4e0c-8de9-cb63c7340da2	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Muna Barat	2021-07-09 10:41:29+07	2021-07-09 10:41:29+07
+id-681e6d87-2f98-43a9-8f28-e5abc08a7c3a	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kabupaten Wakatobi	2021-07-09 10:41:37+07	2021-07-09 10:41:37+07
+id-b68c7872-c9d1-47a8-8ffa-5806724193a8	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kota Baubau	2021-07-09 10:41:44+07	2021-07-09 10:41:44+07
+id-345d34f2-02a0-4074-a158-e92f3ae6b3ed	id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Kota Kendari	2021-07-09 10:41:50+07	2021-07-09 10:41:50+07
+id-4d4e6be8-67a5-4b44-a990-a1d71b71d2de	id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kabupaten Balangan	2021-07-09 10:42:30+07	2021-07-09 10:42:30+07
+id-822ee8fa-d014-433e-8591-e9afb7fa5756	id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kabupaten Banjar	2021-07-09 10:42:37+07	2021-07-09 10:42:37+07
+id-faeb6161-511e-4023-8f25-725120dc96e0	id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kabupaten Barito Kuala	2021-07-09 10:42:44+07	2021-07-09 10:42:44+07
+id-3bb4866b-70d8-4e97-ae9e-0b8475751798	id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kabupaten Hulu Sungai Selatan	2021-07-09 10:42:52+07	2021-07-09 10:42:52+07
+id-09a35a98-51e2-40ff-8ff1-75a26b11080f	id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kabupaten Hulu Sungai Tengah	2021-07-09 10:43:00+07	2021-07-09 10:43:00+07
+id-9e5b4ac9-bdb1-4392-8034-d029e38ace1f	id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kabupaten Hulu Sungai Utara	2021-07-09 10:43:06+07	2021-07-09 10:43:06+07
+id-0e5f81ec-67ea-4631-adb4-c75f7ad34973	id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kabupaten Kotabaru	2021-07-09 10:43:13+07	2021-07-09 10:43:13+07
+id-10fd296c-3b81-4882-b0a3-92c2524913a0	id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kabupaten Tabalong	2021-07-09 10:43:20+07	2021-07-09 10:43:20+07
+id-a7958f36-7557-4ce3-8c1b-9becff18848d	id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kabupaten Tanah Bumbu	2021-07-09 10:43:34+07	2021-07-09 10:43:34+07
+id-9a8ae6b9-bb0f-443e-b435-71d99e42ca25	id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kabupaten Tanah Laut	2021-07-09 10:43:41+07	2021-07-09 10:43:41+07
+id-d7f74d69-a5de-4850-a517-e6b232e40996	id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kabupaten Tapin	2021-07-09 10:43:50+07	2021-07-09 10:43:50+07
+id-bbcb50ae-f02f-45eb-bd87-f50c1d9ab322	id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kota Banjarbaru	2021-07-09 10:43:58+07	2021-07-09 10:43:58+07
+id-df3656cd-2ca6-4e86-9c9a-4dd538d0a4f7	id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kota Banjarmasin	2021-07-09 10:44:06+07	2021-07-09 10:44:06+07
+id-af5e82df-6834-45b1-bb4d-1f4cba73b70e	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Bantaeng	2021-07-09 10:45:12+07	2021-07-09 10:45:12+07
+id-3baa2a88-fd97-458b-8585-ed6441aeb8de	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Barru	2021-07-09 10:45:19+07	2021-07-09 10:45:19+07
+id-de9a1b90-5063-4ac0-92e0-531bead77bb5	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Bone	2021-07-09 10:45:27+07	2021-07-09 10:45:27+07
+id-ba356ea5-2a3c-4450-ab3c-11b9ff1bd668	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Bulukumba	2021-07-09 10:45:36+07	2021-07-09 10:45:36+07
+id-ef09a968-a5dc-49e9-9388-cd269d53f562	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Enrekang	2021-07-09 10:45:43+07	2021-07-09 10:45:43+07
+id-530c4278-33e8-4e82-ba89-1ab18fcca89a	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Gowa	2021-07-09 10:45:53+07	2021-07-09 10:45:53+07
+id-76bd6de0-3a83-4643-85dd-a525005158f8	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Jeneponto	2021-07-09 10:46:01+07	2021-07-09 10:46:01+07
+id-c0c71132-1d08-4875-816c-d85f505bd6fe	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Kepulauan Selayar	2021-07-09 10:46:11+07	2021-07-09 10:46:11+07
+id-5d63f8fa-073f-421b-8819-98b0a442c59f	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Luwu	2021-07-09 10:46:19+07	2021-07-09 10:46:19+07
+id-ae5cc259-b9c5-4cd2-87ef-6abd22032878	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Luwu Timur	2021-07-09 10:46:29+07	2021-07-09 10:46:29+07
+id-8d0d8bcc-8edb-4aed-a4e2-1f486f7cbadc	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Luwu Utara	2021-07-09 10:47:02+07	2021-07-09 10:47:02+07
+id-b526ebc5-28b9-4fee-b467-019c30bcb4db	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Maros	2021-07-09 10:47:12+07	2021-07-09 10:47:12+07
+id-3fbba5f9-b70e-4ea5-9330-a8b98691dcc4	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Pangkajene dan Kepulauan	2021-07-09 10:47:22+07	2021-07-09 10:47:22+07
+id-6196dc68-af31-4066-97e3-077c722ade1c	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Pinrang	2021-07-09 10:47:30+07	2021-07-09 10:47:30+07
+id-239ed2bb-e48b-4ea1-92d2-1fed79e09222	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Sidenreng Rappang	2021-07-09 10:47:39+07	2021-07-09 10:47:39+07
+id-808fb220-ddba-42a1-98c1-e317df4f19a3	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Sinjai	2021-07-09 10:47:51+07	2021-07-09 10:47:51+07
+id-dde1c490-2129-4fe0-9a08-4f97f862c9fb	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Soppeng	2021-07-09 10:47:59+07	2021-07-09 10:47:59+07
+id-2a4bf3cb-7423-4c51-be3a-9fd4dc1a25b4	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Takalar	2021-07-09 10:48:06+07	2021-07-09 10:48:06+07
+id-f4cadd94-92b1-4824-95d7-59f60d86af4e	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Tana Toraja	2021-07-09 10:48:15+07	2021-07-09 10:48:15+07
+id-424b674d-7347-46bd-89ad-942ac3b0feb3	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Toraja Utara	2021-07-09 10:48:22+07	2021-07-09 10:48:22+07
+id-abba2213-5ddd-40d9-97d8-dd6843817ac7	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kabupaten Wajo	2021-07-09 10:48:32+07	2021-07-09 10:48:32+07
+id-2852e84e-b6da-43de-863e-a2b6479d539e	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kota Makassar	2021-07-09 10:48:39+07	2021-07-09 10:48:39+07
+id-4e47be4a-1f41-4c60-b3e9-b554fa5ad549	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kota Palopo	2021-07-09 10:48:46+07	2021-07-09 10:48:46+07
+id-330c9744-364a-4540-a531-bc2f53d9635b	id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Kota Parepare	2021-07-09 10:48:52+07	2021-07-09 10:48:52+07
+id-84eac954-5b96-444f-9cbc-dc8004496890	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Bandung	2021-07-09 10:50:03+07	2021-07-09 10:50:03+07
+id-efde9a48-eaaf-46f9-b0cf-376ba51a728f	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Bandung Barat	2021-07-09 10:50:11+07	2021-07-09 10:50:11+07
+id-af475913-aa04-4c73-a18d-235eec260a5f	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Bekasi	2021-07-09 10:50:26+07	2021-07-09 10:50:26+07
+id-bc5a6df3-98c0-479c-8317-b81cb2ae8d0a	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Bogor	2021-07-09 10:50:38+07	2021-07-09 10:50:38+07
+id-17e0d26a-2ecc-42fb-9b50-71a6455db2ff	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Ciamis	2021-07-09 10:50:47+07	2021-07-09 10:50:47+07
+id-ff64e1fe-da9d-496a-b723-710bd3d66ecb	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Cianjur	2021-07-09 10:50:54+07	2021-07-09 10:50:54+07
+id-d919eadd-ac6e-4f5c-8cda-a8c0c02256ad	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Cirebon	2021-07-09 10:51:02+07	2021-07-09 10:51:02+07
+id-f9c4ad99-bf13-4777-b7a7-39515c215a4d	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Garut	2021-07-09 10:51:09+07	2021-07-09 10:51:09+07
+id-a5a574a6-de40-4ad8-8a71-63f1991f88ea	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Indramayu	2021-07-09 10:51:18+07	2021-07-09 10:51:18+07
+id-1ae32450-0126-4b00-850b-437edc6782f6	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Karawang	2021-07-09 10:51:25+07	2021-07-09 10:51:25+07
+id-b43e6cd3-37d4-41a3-97b5-15e5721b02ee	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Kuningan	2021-07-09 10:51:32+07	2021-07-09 10:51:32+07
+id-35a58362-db19-4cab-bc4b-3fd6cb647436	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Majalengka	2021-07-09 10:51:39+07	2021-07-09 10:51:39+07
+id-1f5e1b4c-443b-4909-b602-29906fff1888	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Pangandaran	2021-07-09 10:51:46+07	2021-07-09 10:51:46+07
+id-88861aa6-bdda-4b36-8538-dc99c3d1a164	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Purwakarta	2021-07-09 10:51:57+07	2021-07-09 10:51:57+07
+id-75def8e9-caf8-4971-bc57-f602897df2af	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Subang	2021-07-09 10:52:04+07	2021-07-09 10:52:04+07
+id-70b35312-391d-43da-810a-127e186cf375	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Sukabumi	2021-07-09 10:52:11+07	2021-07-09 10:52:11+07
+id-3f2ad412-1ef9-4660-94a3-7a248c1d1aaa	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Sumedang	2021-07-09 10:52:18+07	2021-07-09 10:52:18+07
+id-4d8586df-317c-40d4-926d-ec6e211c9dfd	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kabupaten Tasikmalaya	2021-07-09 10:52:25+07	2021-07-09 10:52:25+07
+id-10b35260-97ae-4fb8-94c4-78415f283e1d	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kota Bandung	2021-07-09 10:52:33+07	2021-07-09 10:52:33+07
+id-d90108e6-9836-40d4-a4a8-efd87dcfea7c	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kota Banjar	2021-07-09 10:52:39+07	2021-07-09 10:52:39+07
+id-2c807311-245d-4766-aa93-59a548b591fe	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kota Bekasi	2021-07-09 10:52:45+07	2021-07-09 10:52:45+07
+id-12226609-e11a-4562-a9ef-35ca2c656f2a	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kota Bogor	2021-07-09 10:52:51+07	2021-07-09 10:52:51+07
+id-a07cc0b9-4148-4f7f-88a0-dd49ec500253	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kota Cimahi	2021-07-09 10:52:59+07	2021-07-09 10:52:59+07
+id-c8b74cc8-51d4-4ec9-a512-9ab84f79f244	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kota Cirebon	2021-07-09 10:53:05+07	2021-07-09 10:53:05+07
+id-6709e6d1-0c0c-4217-9290-808e71fb321a	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kota Depok	2021-07-09 10:53:13+07	2021-07-09 10:53:13+07
+id-d696da97-5a2c-43f0-89df-dbfcd64fecca	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kota Sukabumi	2021-07-09 10:53:21+07	2021-07-09 10:53:21+07
+id-74d46b89-7b1f-4b79-9567-08bbd6e62afc	id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Kota Tasikmalaya	2021-07-09 10:53:28+07	2021-07-09 10:53:28+07
+id-28b90846-7e98-4d39-a8cc-88c7c0f64201	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kabupaten Bengkayang	2021-07-09 10:54:30+07	2021-07-09 10:54:30+07
+id-d6f639c4-a56e-4c6f-93ed-48253c4b48bf	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kabupaten Kapuas Hulu	2021-07-09 10:54:39+07	2021-07-09 10:54:39+07
+id-db68fea2-95d2-4390-a49b-fa417ac2a8e6	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kabupaten Kayong Utara	2021-07-09 10:54:47+07	2021-07-09 10:54:47+07
+id-750905d8-9377-4d33-9334-a9460e20fadc	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kabupaten Ketapang	2021-07-09 10:54:54+07	2021-07-09 10:54:54+07
+id-4bf388f3-399c-4bf0-803e-0f369a73e100	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kabupaten Kubu Raya	2021-07-09 10:55:04+07	2021-07-09 10:55:04+07
+id-11a61929-574d-45ea-a93b-57336bb3a488	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kabupaten Landak	2021-07-09 10:55:12+07	2021-07-09 10:55:12+07
+id-31581a6d-a512-4d4d-808e-8d9397a8d13f	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kabupaten Melawi	2021-07-09 10:55:19+07	2021-07-09 10:55:19+07
+id-e41d79b8-032e-421b-8987-b4cb8dd8def5	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kabupaten Mempawah	2021-07-09 10:55:27+07	2021-07-09 10:55:27+07
+id-a8db5d47-0606-42a4-8c3b-ca29067e04d7	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kabupaten Sambas	2021-07-09 10:55:35+07	2021-07-09 10:55:35+07
+id-5e951168-07ca-4af4-8b1c-711d68d3e9f1	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kabupaten Sanggau	2021-07-09 10:55:44+07	2021-07-09 10:55:44+07
+id-b23f0bab-7c27-445a-850e-ff8b7bb4c454	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kabupaten Sekadau	2021-07-09 10:55:51+07	2021-07-09 10:55:51+07
+id-5621605f-de57-434e-aa52-0589dbed4763	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kabupaten Sintang	2021-07-09 10:55:58+07	2021-07-09 10:55:58+07
+id-3ed15e09-4300-4778-aea4-587b8c9901de	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kota Pontianak	2021-07-09 10:56:05+07	2021-07-09 10:56:05+07
+id-1ef0ea7c-37cb-4e1f-807d-3c326eab89ab	id-ed4caa3f-74e3-4313-b641-3543798188fb	Kota Singkawang	2021-07-09 10:56:13+07	2021-07-09 10:56:13+07
+id-5b4a776a-a174-4e38-9179-57a11db66bfc	id-cab0825e-0c6e-4b99-84cc-6a282bcdaa28	Kabupaten Bima	2021-07-09 10:57:02+07	2021-07-09 10:57:02+07
+id-d3c576cc-a685-45e3-b8a9-6a05be4d5c1d	id-cab0825e-0c6e-4b99-84cc-6a282bcdaa28	Kabupaten Dompu	2021-07-09 10:57:10+07	2021-07-09 10:57:10+07
+id-90771e44-0baf-4dc0-8bda-448f50a517c0	id-cab0825e-0c6e-4b99-84cc-6a282bcdaa28	Kabupaten Lombok Barat	2021-07-09 10:57:20+07	2021-07-09 10:57:20+07
+id-cac1a0c7-3dbf-4f1e-ae25-93b3513756f5	id-cab0825e-0c6e-4b99-84cc-6a282bcdaa28	Kabupaten Lombok Tengah	2021-07-09 10:57:28+07	2021-07-09 10:57:28+07
+id-83281e58-b8b2-45d7-b0ef-274c4d0370af	id-cab0825e-0c6e-4b99-84cc-6a282bcdaa28	Kabupaten Lombok Timur	2021-07-09 10:57:36+07	2021-07-09 10:57:36+07
+id-4ae3646e-653a-4600-b1be-15b56cbbcd42	id-cab0825e-0c6e-4b99-84cc-6a282bcdaa28	Kabupaten Lombok Utara	2021-07-09 10:57:44+07	2021-07-09 10:57:44+07
+id-d6de3558-2f47-4473-bcfa-1a2d5040d911	id-cab0825e-0c6e-4b99-84cc-6a282bcdaa28	Kabupaten Sumbawa	2021-07-09 10:57:55+07	2021-07-09 10:57:55+07
+id-7e44b5b6-4ae8-4c90-a921-4e26ccce745f	id-cab0825e-0c6e-4b99-84cc-6a282bcdaa28	Kabupaten Sumbawa Barat	2021-07-09 10:58:04+07	2021-07-09 10:58:04+07
+id-118e2b4e-af65-4db0-9506-e7743707c035	id-cab0825e-0c6e-4b99-84cc-6a282bcdaa28	Kota Bima	2021-07-09 10:58:12+07	2021-07-09 10:58:12+07
+id-4f1e009c-3eb8-4b20-934f-9fef02837a08	id-cab0825e-0c6e-4b99-84cc-6a282bcdaa28	Kota Mataram	2021-07-09 10:58:20+07	2021-07-09 10:58:20+07
+id-9b8cbdcf-25b1-4fe3-824a-7de88448e4f9	id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Kabupaten Fakfak	2021-07-09 10:59:08+07	2021-07-09 10:59:08+07
+id-61999376-58c4-4a85-85c5-6c317e67512f	id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Kabupaten Kaimana	2021-07-09 10:59:17+07	2021-07-09 10:59:17+07
+id-9328a1b6-e18a-487c-b9bc-e883aaf4d42f	id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Kabupaten Manokwari	2021-07-09 10:59:25+07	2021-07-09 10:59:25+07
+id-c083d84b-efe9-4feb-9e27-b10e60595823	id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Kabupaten Manokwari Selatan	2021-07-09 10:59:32+07	2021-07-09 10:59:32+07
+id-4df31a05-aaac-4911-b9e8-0af745b912b7	id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Kabupaten Maybrat	2021-07-09 10:59:40+07	2021-07-09 10:59:40+07
+id-95e596ab-cde5-4de3-8cbb-b9b350d0c04e	id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Kabupaten Pegunungan Arfak	2021-07-09 10:59:48+07	2021-07-09 10:59:48+07
+id-c4115673-beed-470a-b01f-d3758c27feea	id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Kabupaten Raja Ampat	2021-07-09 10:59:59+07	2021-07-09 10:59:59+07
+id-8d89d3b9-d4f7-4ab5-a432-e0635bf7a6fd	id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Kabupaten Sorong	2021-07-09 11:00:08+07	2021-07-09 11:00:08+07
+id-cf256270-fe98-4ba1-ac34-d24263188870	id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Kabupaten Sorong Selatan	2021-07-09 11:00:15+07	2021-07-09 11:00:15+07
+id-5e350be4-3c71-411b-91d3-7e5126b39b97	id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Kabupaten Tambrauw	2021-07-09 11:00:24+07	2021-07-09 11:00:24+07
+id-85807766-3ef8-4332-a3ab-f09fe3a60581	id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Kabupaten Teluk Bintuni	2021-07-09 11:00:32+07	2021-07-09 11:00:32+07
+id-69ba0de2-6832-495d-86d3-e115daab18e6	id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Kabupaten Teluk Wondama	2021-07-09 11:00:40+07	2021-07-09 11:00:40+07
+id-7a512b71-1445-45e6-bf9d-e4509fc3d068	id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Kota Sorong	2021-07-09 11:00:47+07	2021-07-09 11:00:47+07
+id-00fb5e8b-8581-4651-9624-e817f775244a	id-aa7f25fa-ca81-4067-8b09-bd6af8720c51	Kabupaten Majene	2021-07-09 11:01:38+07	2021-07-09 11:01:38+07
+id-138e7640-f2b9-4260-90fe-1764559cc7a3	id-aa7f25fa-ca81-4067-8b09-bd6af8720c51	Kabupaten Mamasa	2021-07-09 11:01:44+07	2021-07-09 11:01:44+07
+id-ebce2d63-070b-4446-a452-ac5a5071e6cf	id-aa7f25fa-ca81-4067-8b09-bd6af8720c51	Kabupaten Mamuju	2021-07-09 11:01:52+07	2021-07-09 11:01:52+07
+id-09f2b993-d568-450a-ab8c-2c346e57031d	id-aa7f25fa-ca81-4067-8b09-bd6af8720c51	Kabupaten Mamuju Tengah	2021-07-09 11:01:59+07	2021-07-09 11:01:59+07
+id-c397f985-1b01-4686-b603-0479eb7f1762	id-aa7f25fa-ca81-4067-8b09-bd6af8720c51	Kabupaten Pasangkayu	2021-07-09 11:02:08+07	2021-07-09 11:02:08+07
+id-2d0b1f16-04aa-4ae4-af57-cc6d86c0aa57	id-aa7f25fa-ca81-4067-8b09-bd6af8720c51	Kabupaten Polewali Mandar	2021-07-09 11:02:16+07	2021-07-09 11:02:16+07
+id-40ce5f6b-22ee-44b5-9c8e-d1d1eed9fcae	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kabupaten Agam	2021-07-09 11:03:04+07	2021-07-09 11:03:04+07
+id-f17b6560-08a4-46a9-ba32-4680fa01d52f	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kabupaten Dharmasraya	2021-07-09 11:03:14+07	2021-07-09 11:03:14+07
+id-6bf98c42-7244-42b2-8e48-075f239a3056	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kabupaten Kepulauan Mentawai	2021-07-09 11:03:22+07	2021-07-09 11:03:22+07
+id-06d24c01-eb1d-4db9-8346-65ef172b74c7	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kabupaten Lima Puluh Kota	2021-07-09 11:03:29+07	2021-07-09 11:03:29+07
+id-c078e03f-f6b9-41ad-972e-3e66cc7f8b3e	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kabupaten Padang Pariaman	2021-07-09 11:03:39+07	2021-07-09 11:03:39+07
+id-697cd1b8-f1ff-4e2e-a982-be6983c986aa	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kabupaten Pasaman	2021-07-09 11:03:47+07	2021-07-09 11:03:47+07
+id-6e05d4ec-7ab8-4280-b540-89109f6f0788	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kabupaten Pasaman Barat	2021-07-09 11:03:54+07	2021-07-09 11:03:54+07
+id-72025e56-dea1-4176-b0cf-d496541e10a0	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kabupaten Pesisir Selatan	2021-07-09 11:04:03+07	2021-07-09 11:04:03+07
+id-20fa035b-8ef4-421a-8ae0-f05c9e26bb80	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kabupaten Sijunjung	2021-07-09 11:04:11+07	2021-07-09 11:04:11+07
+id-d9ce2323-9655-4ee3-aefd-85ceb629c9a2	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kabupaten Solok	2021-07-09 11:04:21+07	2021-07-09 11:04:21+07
+id-18fad70f-d52d-4be7-902e-b59a88508400	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kabupaten Solok Selatan	2021-07-09 11:04:29+07	2021-07-09 11:04:29+07
+id-afb6de08-591d-4e91-80ce-457cfc12c03d	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kabupaten Tanah Datar	2021-07-09 11:04:38+07	2021-07-09 11:04:38+07
+id-6e38410f-b599-4c0e-9dec-7e9fb7b25365	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kota Bukittinggi	2021-07-09 11:04:47+07	2021-07-09 11:04:47+07
+id-5685d58b-2735-4cb4-ac83-c7b43a0aafd8	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kota Padang	2021-07-09 11:04:55+07	2021-07-09 11:04:55+07
+id-3173d6b1-d4d0-4d0d-b1ee-282dec6cb9f0	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kota Padang Panjang	2021-07-09 11:05:05+07	2021-07-09 11:05:05+07
+id-805c6ba1-48fb-49c7-81d0-0e4290429279	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kota Pariaman	2021-07-09 11:05:13+07	2021-07-09 11:05:13+07
+id-0564cae4-642b-4b72-8181-53019ab03c4c	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kota Payakumbuh	2021-07-09 11:05:21+07	2021-07-09 11:05:21+07
+id-bd123755-8722-4835-b307-61535db67172	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kota Sawahlunto	2021-07-09 11:05:29+07	2021-07-09 11:05:29+07
+id-7350c381-abfe-4337-83de-22ba845042f7	id-97923474-feb8-4d65-a829-08d6ad13ed2d	Kota Solok	2021-07-09 11:05:36+07	2021-07-09 11:05:36+07
+id-589e5e78-55c3-4423-b0c1-1fa3943c63ca	id-3ee9a97c-1c27-4e3a-8ef5-78e72e7d3da5	Kabupaten Bantul	2021-07-09 11:06:24+07	2021-07-09 11:06:24+07
+id-c151a15c-b252-4215-8cfd-0ae4e776795e	id-3ee9a97c-1c27-4e3a-8ef5-78e72e7d3da5	Kabupaten Gunungkidul	2021-07-09 11:06:32+07	2021-07-09 11:06:32+07
+id-bc660a13-b9ea-4636-a268-b1e6a50f341f	id-3ee9a97c-1c27-4e3a-8ef5-78e72e7d3da5	Kabupaten Kulon Progo	2021-07-09 11:06:41+07	2021-07-09 11:06:41+07
+id-843a891d-9401-4485-a4ed-05c4f0e84522	id-3ee9a97c-1c27-4e3a-8ef5-78e72e7d3da5	Kabupaten Sleman	2021-07-09 11:06:49+07	2021-07-09 11:06:49+07
+id-9f39d520-e780-491f-a034-1975b2fca33c	id-3ee9a97c-1c27-4e3a-8ef5-78e72e7d3da5	Kota Yogyakarta	2021-07-09 11:07:04+07	2021-07-09 11:07:04+07
+\.
+
+
+--
+-- Data for Name: education_list; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.education_list (education_list_id, education, created_at, updated_at) FROM stdin;
+id-73d4952c-7b8b-4c2b-b141-60828e169cd0	SMA	2021-07-11 18:56:28+07	2021-07-11 18:56:31+07
+id-f5c96e59-ce0c-4016-be19-25f161d45803	SMK	2021-07-11 18:56:44+07	2021-07-11 18:56:47+07
+id-ed43a1cd-c673-4e6f-94b4-a29fc7e1df59	MA	2021-07-11 18:57:31+07	2021-07-11 18:57:33+07
+\.
+
+
+--
+-- Data for Name: group_account; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.group_account (group_account_id, id_sub_account, group_account_value, group_account_des, created_at, updated_at) FROM stdin;
+id-505f124f-aab5-4850-9c92-c0ad6752e12f	id-5489562e-ff41-4773-8156y-btbq5rd5rbn	4110	Pendaftaran Mahasiswa Baru	2021-07-15 00:00:00+07	2021-07-15 00:00:00+07
+id-bba74306-4a72-443d-a3ab-722e463cd364	id-5489562e-ff41-4773-8156y-btbq5rd5rbn	4120	Dp/Uang Muka Mahasiswa Baru	2021-07-15 00:00:00+07	2021-07-15 00:00:00+07
+id-c88f1931-1e55-409a-9b4f-395ad447c17e	id-5489562e-ff41-4773-8156y-btbq5rd5rbn	4130	Angsuran Mahasiswa	2021-07-15 00:00:00+07	2021-07-15 00:00:00+07
+id-c88f1931-1e55-409a-9b4f-395ad447c17v	id-5489562e-ff41-4773-8156y-btbq5rd5rbc	5110	Listrik	2021-07-15 00:00:00+07	2021-07-15 00:00:00+07
+id-c88f1931-1e55-409a-9b4f-395ad447i17v	id-5489562e-ff41-4773-8156y-btbq5rd5rbc	5120	Dinas Kebersihan (Sampah)	2021-07-15 00:00:00+07	2021-07-15 00:00:00+07
+\.
+
+
+--
+-- Data for Name: lecturer; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.lecturer (lecturer_id, no_registration, nidn, full_name, title, academic_position, id_education_list, study_program, id_district_or_city, id_religion, place_of_birth, date_of_birth, gender, email, phone_number, address, postal_code_number, permanent, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: lesson_timetable; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.lesson_timetable (lesson_timetable_id, id_lecturer, id_mk, lesson_timetable_name, lesson_timetable_status, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: list_majors; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.list_majors (list_major_id, id_class_campus, major_code, major, list_major_status, created_at, updated_at, major_image, major_desc) FROM stdin;
+id-0c80a150-92dc-49a4-8694-a159c108c879	id-5900c482-31ef-4423-b28d-cbfad0081239	201	Manajemen Informatika	Enable	2021-07-12 08:36:22+07	2021-07-12 08:36:25+07	one.jpg	Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere quasi inventore ab mollitia similique reiciendis, veritatis explicabo dolorem soluta animi officiis quia earum, dolore quis fuga, fugiat quaerat. Minima, veniam.
+id-983931c1-7f45-4028-8ea7-d1ee5f167304	id-5900c482-31ef-4423-b28d-cbfad0081239	202	Teknik Mesin	Enable	2021-07-12 08:37:37+07	2021-07-12 08:37:40+07	two.jpg	Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere quasi inventore ab mollitia similique reiciendis, veritatis explicabo dolorem soluta animi officiis quia earum, dolore quis fuga, fugiat quaerat. Minima, veniam.
+id-c19e3988-d8a8-4ab5-b63b-df0d4542ee92	id-5900c482-31ef-4423-b28d-cbfad0081239	203	Teknik Elektronika	Enable	2021-07-12 08:39:04+07	2021-07-12 08:39:06+07	tre.jpg	Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere quasi inventore ab mollitia similique reiciendis, veritatis explicabo dolorem soluta animi officiis quia earum, dolore quis fuga, fugiat quaerat. Minima, veniam.
+\.
+
+
+--
+-- Data for Name: list_price; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.list_price (list_price_id, id_major, list_price_desc, list_price_value, list_price_status, created_at, updated_at) FROM stdin;
+id-521b518e-cc51-4af8-9e77-60e58569b472	id-983931c1-7f45-4028-8ea7-d1ee5f167304	DANA PENGEMBANGAN	2000000	Enable	2021-07-12 08:57:42+07	2021-07-12 08:57:39+07
+id-5f28fe19-5125-4902-b9ca-15e48c9b4179	id-983931c1-7f45-4028-8ea7-d1ee5f167304	SERAGAM + ALMET	700000	Enable	2021-07-12 09:15:58+07	2021-07-12 09:16:02+07
+id-db9b7a27-c55b-4c32-b1cc-744727030b4b	id-983931c1-7f45-4028-8ea7-d1ee5f167304	UKT	3000000	Enable	2021-07-12 09:17:16+07	2021-07-12 09:17:18+07
+id-af22f19a-aff9-4b75-a782-fcadff6aa2cf	id-983931c1-7f45-4028-8ea7-d1ee5f167304	SEMESTER 1	5000000	Enable	2021-07-12 09:18:47+07	2021-07-12 09:18:50+07
+id-3b781a63-9a16-452c-9548-fc4d693499ec	id-983931c1-7f45-4028-8ea7-d1ee5f167304	SEMESTER 2	5000000	Enable	2021-07-12 09:19:59+07	2021-07-12 09:20:01+07
+id-f3964b20-cfa6-4337-8019-8c3ffdb9a09f	id-983931c1-7f45-4028-8ea7-d1ee5f167304	SEMESTER 3	5000000	Enable	2021-07-12 09:21:10+07	2021-07-12 09:21:12+07
+id-9c411df1-0555-454f-adde-2ddbabd85128	id-983931c1-7f45-4028-8ea7-d1ee5f167304	SEMESTER 4	5000000	Enable	2021-07-12 09:21:53+07	2021-07-12 09:21:56+07
+id-0ba6a313-ad45-468c-b286-b86e3b94a5d3	id-983931c1-7f45-4028-8ea7-d1ee5f167304	SEMESTER 5	5000000	Enable	2021-07-12 09:22:56+07	2021-07-12 09:22:58+07
+id-39244edc-6550-4f5d-931b-4d34624ff48d	id-983931c1-7f45-4028-8ea7-d1ee5f167304	SEMESTER 6	5000000	Enable	2021-07-12 09:23:36+07	2021-07-12 09:23:39+07
+id-03afd296-d80b-41e6-a365-916b1f6d765d	id-c19e3988-d8a8-4ab5-b63b-df0d4542ee92	DANA PENGEMBANGAN	2000000	Enable	2021-07-12 09:24:28+07	2021-07-12 09:24:30+07
+id-4e7d0ea0-d682-4b35-92fe-0fcb79a7c157	id-c19e3988-d8a8-4ab5-b63b-df0d4542ee92	SERAGAM + ALMET	700000	Enable	2021-07-12 09:25:07+07	2021-07-12 09:25:09+07
+id-a20af8e6-b4b6-4cb0-9cea-9775b1eb6a75	id-c19e3988-d8a8-4ab5-b63b-df0d4542ee92	UKT	3000000	Enable	2021-07-12 09:25:45+07	2021-07-12 09:25:48+07
+id-e517c1f9-11b8-4b58-929b-2164a295d697	id-c19e3988-d8a8-4ab5-b63b-df0d4542ee92	SEMESTER 1	5000000	Enable	2021-07-12 09:26:15+07	2021-07-12 09:26:17+07
+id-4c26929b-2a26-412b-820f-cb99a6372a99	id-c19e3988-d8a8-4ab5-b63b-df0d4542ee92	SEMESTER 2	5000000	Enable	2021-07-12 09:28:12+07	2021-07-12 09:28:15+07
+id-88488b6f-7674-4e39-bcb7-683c1a1b54d7	id-c19e3988-d8a8-4ab5-b63b-df0d4542ee92	SEMESTER 3	5000000	Enable	2021-07-12 09:28:41+07	2021-07-12 09:28:43+07
+id-5a70e47a-8a81-46de-9a3c-ba8084ae9148	id-c19e3988-d8a8-4ab5-b63b-df0d4542ee92	SEMESTER 4	5000000	Enable	2021-07-12 09:29:15+07	2021-07-12 09:29:17+07
+id-b4401dda-8b93-4d2e-9fd9-433869622967	id-c19e3988-d8a8-4ab5-b63b-df0d4542ee92	SEMESTER 5	5000000	Enable	2021-07-12 09:29:43+07	2021-07-12 09:29:47+07
+id-7f2ab33f-ddf3-4150-8965-c698aeb9abeb	id-c19e3988-d8a8-4ab5-b63b-df0d4542ee92	SEMESTER 6	5000000	Enable	2021-07-12 09:30:18+07	2021-07-12 09:30:20+07
+id-70338584-a8d3-4171-b157-e01d93928559	id-0c80a150-92dc-49a4-8694-a159c108c879	DANA PENGEMBANGAN	2000000	Enable	2021-07-12 09:31:25+07	2021-07-12 09:31:28+07
+id-d0424ddc-5b86-4dc8-8d7d-3dd86e59a18e	id-0c80a150-92dc-49a4-8694-a159c108c879	SERAGAM + ALMET	700000	Enable	2021-07-12 09:32:54+07	2021-07-12 09:32:56+07
+id-bb6146e0-a8f8-43df-9774-cb88c8d5558f	id-0c80a150-92dc-49a4-8694-a159c108c879	UKT	3000000	Enable	2021-07-12 09:33:27+07	2021-07-12 09:33:30+07
+id-804e8b8d-1c13-47c1-a8cb-f5f176cece14	id-0c80a150-92dc-49a4-8694-a159c108c879	SEMESTER 1	4500000	Enable	2021-07-12 09:34:17+07	2021-07-12 09:34:20+07
+id-66062e94-c651-44c9-9839-fd37e11c62b3	id-0c80a150-92dc-49a4-8694-a159c108c879	SEMESTER 2	4500000	Enable	2021-07-12 09:34:50+07	2021-07-12 09:34:52+07
+id-85fac0e4-fd19-4570-ab20-6dcb02d4f90e	id-0c80a150-92dc-49a4-8694-a159c108c879	SEMESTER 3	4500000	Enable	2021-07-12 09:35:18+07	2021-07-12 09:35:23+07
+id-4f6c916a-21c2-424a-a373-33f3fa84185c	id-0c80a150-92dc-49a4-8694-a159c108c879	SEMESTER 4	4500000	Enable	2021-07-12 09:35:52+07	2021-07-12 09:35:56+07
+id-fbe2bfc9-d40c-4c81-bc73-e6bd328990cb	id-0c80a150-92dc-49a4-8694-a159c108c879	SEMESTER 5	4500000	Enable	2021-07-12 09:36:23+07	2021-07-12 09:36:26+07
+id-3ba7e6e3-a1e9-4de9-90fe-9a9ad11f9ed2	id-0c80a150-92dc-49a4-8694-a159c108c879	SEMESTER 6	4500000	Enable	2021-07-12 09:36:53+07	2021-07-12 09:36:55+07
+\.
+
+
+--
+-- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.menu (menu_id, id_path, role_id, menu_name, menu_icon, menu_status, created_at, updated_at, menu_type) FROM stdin;
+id-e2010751-a434-4b5c-9d6e-8d67639v9a4f	-	id-e2010751-a434-4b5c-9d6e-8d676d9e9a4f	Users	fas fa-users	Enable	2021-08-10 16:46:23+07	2021-08-10 16:46:23+07	Submenu
+id-040fe206-8af5-4d8a-aec0-8e81488fe7ae	-	id-284e240b-8249-4fdc-82e1-c1e100c066d4	Prospective students	fas fa-database	Enable	2021-08-18 08:34:11+07	2021-08-18 08:34:11+07	Submenu
+id-6b66b77a-dfef-42f9-8cc1-95c2eb8d8c52	-	id-97e1dc24-ce38-4ed9-bd52-666af87592cd	Accountancy	fas fa-money-bill-alt	Enable	2021-08-25 15:55:39+07	2021-08-25 15:55:39+07	Submenu
+id-3f2daecd-5063-4a2f-b7b0-2658a05b7433	-	id-97e1dc24-ce38-4ed9-bd52-666af87592cd	Transactions	fas fa-funnel-dollar	Enable	2021-08-23 09:29:13+07	2021-08-23 09:29:13+07	Submenu
+\.
+
+
+--
+-- Data for Name: mikro_orm_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.mikro_orm_migrations (id, name, executed_at) FROM stdin;
+1	Migration20210717032935.js	2021-07-17 10:30:08.183682+07
+2	Migration20210719013847.js	2021-07-19 08:38:52.989443+07
+3	Migration20210721024016.js	2021-07-21 09:40:23.524895+07
+4	Migration20210723165736.js	2021-07-23 23:57:40.725448+07
+5	Migration20210723165913.js	2021-07-23 23:59:17.277859+07
+6	Migration20210723171744.js	2021-07-24 00:17:48.29326+07
+7	Migration20210723173711.js	2021-07-24 00:37:15.151351+07
+8	Migration20210723173802.js	2021-07-24 00:38:05.547624+07
+9	Migration20210723174105.js	2021-07-24 00:41:09.605637+07
+16	Migration20210723175013.js	2021-07-24 00:50:30.186611+07
+17	Migration20210724062314.js	2021-07-24 13:23:19.548358+07
+18	Migration20210810093812.js	2021-08-10 16:38:22.330923+07
+19	Migration20210810100057.js	2021-08-10 17:01:04.845259+07
+20	Migration20210810124220.js	2021-08-10 19:43:37.905975+07
+21	Migration20210810193806.js	2021-08-11 02:38:56.509209+07
+22	Migration20210810193948.js	2021-08-11 02:39:58.596035+07
+23	Migration20210812064548.js	2021-08-12 13:46:00.050349+07
+24	Migration20210814171303.js	2021-08-15 00:13:08.296241+07
+25	Migration20210814184038.js	2021-08-15 01:40:48.60075+07
+26	Migration20210816035045.js	2021-08-16 10:50:51.105236+07
+27	Migration20210818055709.js	2021-08-18 12:57:19.523977+07
+28	Migration20210819024400.js	2021-08-19 09:44:05.622743+07
+29	Migration20210819041838.js	2021-08-19 11:18:47.940679+07
+30	Migration20210819042500.js	2021-08-19 11:25:48.083692+07
+31	Migration20210819042543.js	2021-08-19 11:25:48.083692+07
+32	Migration20210819081227.js	2021-08-19 15:12:32.288896+07
+33	Migration20210819083143.js	2021-08-19 15:31:47.536359+07
+34	Migration20210819083644.js	2021-08-19 15:36:48.740697+07
+35	Migration20210825080237.js	2021-08-25 15:02:51.791278+07
+36	Migration20210825080457.js	2021-08-25 15:05:03.905998+07
+37	Migration20210825082429.js	2021-08-25 15:24:37.575734+07
+38	Migration20210825083242.js	2021-08-25 15:34:43.955057+07
+39	Migration20210825083435.js	2021-08-25 15:34:43.955057+07
+40	Migration20210825135753.js	2021-08-25 20:58:37.234413+07
+41	Migration20210825141500.js	2021-08-25 21:15:07.660367+07
+42	Migration20210825173815.js	2021-08-26 00:38:20.397919+07
+43	Migration20210825174232.js	2021-08-26 00:42:36.436485+07
+44	Migration20210825174834.js	2021-08-26 00:48:38.167364+07
+45	Migration20210825174919.js	2021-08-26 00:49:25.590274+07
+46	Migration20210825175314.js	2021-08-26 00:53:21.427104+07
+47	Migration20210825180401.js	2021-08-26 01:04:09.24966+07
+48	Migration20210827143253.js	2021-08-27 21:33:38.387804+07
+49	Migration20210827145106.js	2021-08-27 21:51:15.144902+07
+50	Migration20210828025220.js	2021-08-28 09:52:29.899019+07
+51	Migration20210828042129.js	2021-08-28 11:21:34.519985+07
+52	Migration20210828185536.js	2021-08-29 01:55:41.936275+07
+53	Migration20210828185645.js	2021-08-29 01:56:48.947464+07
+54	Migration20210830032619.js	2021-08-30 10:26:23.323016+07
+55	Migration20210830033651.js	2021-08-30 10:36:56.930535+07
+56	Migration20210830040412.js	2021-08-30 11:04:16.685497+07
+57	Migration20210830100538.js	2021-08-30 17:05:43.799772+07
+58	Migration20210830100635.js	2021-08-30 17:06:39.173825+07
+\.
+
+
+--
+-- Data for Name: mk; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.mk (mk_id, id_lesson, mk_name, mk_status, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: money_movement; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.money_movement (money_movement_id, account, ref, proof, amount, money_movement_des, money_movement_type, created_at, updated_at, connected, movement_to_type, mark, posted, return_amount) FROM stdin;
+id-ac2416a8-bd9c-4458-8f14-3750794b851v	id-505f124f-aab5-4850-9c92-c0ad6752e12f	\N	G5634862	350000	Pembayaran Pendaftaran Mahasiswa Baru	Debit	2021-07-15 00:00:00+07	2021-08-30 15:50:42+07	id-d14759d4-cc18-4809-805d-47c3327fc19e	Registration	No	f	25000
+id-ac2416a8-bd9c-4458-8f14-3750794bj51v	id-c88f1931-1e55-409a-9b4f-395ad447c17v	\N	G5634863	500000	Pembelian Token Listrik	Kredit	2021-07-15 00:00:00+07	2021-08-30 11:41:48+07	\N	Etc	No	t	0
+\.
+
+
+--
+-- Data for Name: pathurl; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.pathurl (path_url_id, url, created_at, updated_at) FROM stdin;
+id-e2010751-a434-4b5c-9d6e-8d676d9e9a4r	/apps/users	2021-08-10 16:48:01+07	2021-08-10 16:48:01+07
+id-e2010751-a434-4b5c-9d6e-8d676d9e9ohr	/apps/users/setting	2021-08-10 16:48:01+07	2021-08-10 16:48:01+07
+id-e2010751-a434-4b8c-9t6e-8d676d9e9asr	/marketing/prospectivsetudents	2021-08-10 16:48:01+07	2021-08-10 16:48:01+07
+id-ek04s751-a434-4b8c-9t6e-8d676d9e9asr	/marketing/prosesstest	2021-08-10 16:48:01+07	2021-08-10 16:48:01+07
+id-e80l55v1-a434-4b8c-9t6e-8d676d9e9asd	/finance/transactions	2021-08-10 16:48:01+07	2021-08-10 16:48:01+07
+id-7dadd5de-2b0c-4d4e-bda1-5831c4c0e225	/finance/accountancy/trialbalance	2021-08-10 16:48:01+07	2021-08-10 16:48:01+07
+id-7daod5de-2b0c-4d4e-bda1-5831c4c0e22v	/finance/accountancy/ledger	2021-08-10 16:48:01+07	2021-08-10 16:48:01+07
+id-33dcc62f-87a6-4b07-806b-d25ac907b6af	/finance/accountancy	2021-08-10 16:48:01+07	2021-08-10 16:48:01+07
+id-24bbc46d-173f-4ae7-9541-b241da658466	/finance/accountancy/cashflow	2021-08-10 16:48:01+07	2021-08-10 16:48:01+07
+id-e2010751-a434-4b5c-9d6e-8d67639v9a4v	/finance/transactions/moneymovement	2021-08-10 16:48:01+07	2021-08-10 16:48:01+07
+\.
+
+
+--
+-- Data for Name: payments; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.payments (payment_id, payment_type, destination_pay, destination_name, destination_image, created_at, updated_at) FROM stdin;
+id-619d9a5d-36e6-41a8-bc3b-30eb2c6801ed	bank_transfer	bank	bri	bri.png	2021-07-15 08:33:49+07	2021-07-15 08:33:58+07
+id-5489562e-ff41-4773-8156-bb3b15fd5eb7	bank_transfer	bank	bni	bni.png	2021-07-15 08:33:52+07	2021-07-15 08:34:00+07
+id-79720a4b-8333-41a9-93b2-e8dd2d99d6cb	bank_transfer	bank	bca	bca.png	2021-07-15 08:33:54+07	2021-07-15 08:34:02+07
+id-dd5cf74b-3252-464d-8abc-8feb525422f8	cstore	store	Indomaret	indo.png	2021-07-15 08:34:36+07	2021-07-15 08:34:40+07
+id-ca9341cb-7034-42cd-9fc1-60d03b5d4574	cstore	store	alfamart	alfa.png	2021-07-15 08:35:17+07	2021-07-15 08:35:19+07
+\.
+
+
+--
+-- Data for Name: presenter; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.presenter (presenter_id, presenter_name, presenter_photo, status_presenter, created_at, updated_at) FROM stdin;
+id-3cba7de9-f6ae-46bc-826b-8e778678e8ab	Rafi Aditya Pradana	pres.jpg	Enable	2021-07-19 15:24:13+07	2021-07-19 15:24:16+07
+\.
+
+
+--
+-- Data for Name: profession; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.profession (profession_id, profession, created_at, updated_at) FROM stdin;
+id-7dc73371-e590-4cf0-bbc5-586c4094bb6a	Buruh Pabrik	2021-07-12 08:40:10+07	2021-07-12 08:40:13+07
+id-6ef0829a-6cbb-4652-bd7d-ac638581d1af	Guru	2021-07-12 08:41:07+07	2021-07-12 08:41:10+07
+\.
+
+
+--
+-- Data for Name: prospective_students; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.prospective_students (prospective_students_id, reg_code, full_name, place_of_birth, date_of_birth, gender, email, phone_number, school_origin, address, postal_code_number, parents_name, house_phone_number, graduation_year, date_come, total_investment, registration_status, date_registration, dp_status, date_dp, amount_dp, id_school_year, parents_profession, id_education_list, id_district_or_city, id_religion, id_source_info, id_wave_register, id_major, id_presenter, note, created_at, updated_at, further_process, date_finis_further_process, mark) FROM stdin;
+id-1de8c13b-2502-4ae1-ad45-c43d9d205599	PMB2012021624165459	Rafi Aditya	jftjgfjfgj	1998-11-26 07:00:00+07	Male	rafiadityapradana@gmail.com	0854435432	yyrwertw	Oke deh	1673	tttttadf	085463546735	2016	2021-07-24 16:55:00+07	32700000	No	\N	No	\N	0	id-5dca1dc2-969c-4693-99ae-e4559d9457ef	id-6ef0829a-6cbb-4652-bd7d-ac638581d1af	id-73d4952c-7b8b-4c2b-b141-60828e169cd0	id-555b8970-eee0-40aa-93d7-f73ee237825f	id-5453b407-e97b-4320-b085-9d4e3133e49f	id-2721926a-c9b7-4dff-ae35-2184f6881579	id-d6f93547-c3b3-4d1a-b46b-3b8ce49b492f	id-0c80a150-92dc-49a4-8694-a159c108c879	\N	undefined	2021-07-24 16:55:00+07	2021-07-24 16:55:00+07	-	\N	No
+id-d14759d4-cc18-4809-805d-47c3327fc19e	PMB201202171211255	Rafi aditya Pradana	TRIMURJO	1998-11-26 07:00:00+07	Male	rafiadityapradana@gmail.com	08456345234	SMA MUHAMMADIYAH 1 TRIMURJO	324324324	1673	Ali rahmat	0884675634534	2016	2021-08-12 11:02:56+07	32700000	No	\N	No	\N	0	id-5dca1dc2-969c-4693-99ae-e4559d9457ef	id-7dc73371-e590-4cf0-bbc5-586c4094bb6a	id-73d4952c-7b8b-4c2b-b141-60828e169cd0	id-f6c1d9be-2e51-45ce-8a4a-a8a13da68839	id-5453b407-e97b-4320-b085-9d4e3133e49f	id-efd49296-eecb-4abb-92d9-2c6ba6b81b0a	id-d6f93547-c3b3-4d1a-b46b-3b8ce49b492f	id-0c80a150-92dc-49a4-8694-a159c108c879	\N	This Is Update Note Two	2021-08-12 11:02:56+07	2021-08-12 11:02:56+07	-	\N	No
+\.
+
+
+--
+-- Data for Name: province; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.province (province_id, province_name, created_at, updated_at) FROM stdin;
+id-40cfe61c-1f3c-4ad1-8187-e1811d6e4270	Aceh	2021-07-09 01:38:09+07	2021-07-09 01:38:09+07
+id-eb565712-7a58-428f-ae35-08e92ddda931	Bali	2021-07-08 18:42:20+07	2021-07-09 01:42:20+07
+id-fe8993b7-23aa-43e3-b8fc-343c68b87639	Bangka Belitung	2021-07-08 18:42:23+07	2021-07-09 01:42:23+07
+id-0646d08e-8016-408f-8ea0-4fa285e8e7bc	Banten	2021-07-08 18:42:34+07	2021-07-09 01:42:34+07
+id-923bb5a0-4fd9-403c-886b-bf76cd4ba42d	Bengkulu	2021-07-08 18:42:49+07	2021-07-09 01:42:49+07
+id-0a318fcb-8b5a-41e1-b62e-858560acf4f8	Jawa Tengah	2021-07-08 18:42:52+07	2021-07-09 01:42:52+07
+id-67534294-7521-4006-b802-50d86976c968	Kalimantan Tengah	2021-07-08 18:43:02+07	2021-07-09 01:43:02+07
+id-1566a265-84c1-43d3-8853-ba4c5968944a	Sulawesi Tengah	2021-07-08 18:43:11+07	2021-07-09 01:43:11+07
+id-79ab2d56-1844-4b5d-aea7-582df694bf4f	Jawa timur	2021-07-08 18:43:21+07	2021-07-09 01:43:21+07
+id-6da2ac5a-ed3f-4277-80b1-189cc8787d7d	Kalimantan Timur	2021-07-08 18:43:34+07	2021-07-09 01:43:34+07
+id-8abfbab6-c889-4156-8535-28460f41dd0b	Nusa Tenggara Timur	2021-07-08 18:43:46+07	2021-07-09 01:43:46+07
+id-87ca9631-dfdf-48a7-b281-c8ddf97032cd	Gorontalo	2021-07-08 18:43:57+07	2021-07-09 01:43:57+07
+id-dccf9b1a-5912-47e2-a5d4-2d4a71bd96e3	Daerah Khusus Ibukota Jakarta	2021-07-08 18:44:23+07	2021-07-09 01:44:23+07
+id-c05bc25d-95c4-4b10-85d2-091437c64fd4	Jambi	2021-07-08 18:44:34+07	2021-07-09 01:44:34+07
+id-107dc013-56de-49c6-a625-b65c407b6266	Lampung	2021-07-08 18:44:42+07	2021-07-09 01:44:42+07
+id-00f65e00-09df-4fb0-85d4-3445ac9043c5	Maluku	2021-07-08 18:44:50+07	2021-07-09 01:44:50+07
+id-2d947325-dcf6-4f37-8e5b-561eb544633e	Sulawesi Utara	2021-07-08 18:45:11+07	2021-07-09 01:45:11+07
+id-c4c74ab9-e7d5-4c64-83a1-332a10587118	Sumatera Utara	2021-07-08 18:45:25+07	2021-07-09 01:45:25+07
+id-84380719-de16-43a9-af96-d714e8bc0387	Papua	2021-07-08 18:45:39+07	2021-07-09 01:45:39+07
+id-b53e641a-58cb-436a-8606-f2901d37a6b5	Riau	2021-07-08 18:45:46+07	2021-07-09 01:45:46+07
+id-e9652d27-c39f-419b-aca6-5258dea92abd	Kepulauan Riau	2021-07-08 18:45:53+07	2021-07-09 01:45:53+07
+id-fb30dc0c-ffa7-4f22-948d-4b6832b51135	Sulawesi Tenggara	2021-07-08 18:46:02+07	2021-07-09 01:46:02+07
+id-66745d4e-c1c4-4c9d-a031-68fb844fb1ac	Kalimantan Selatan	2021-07-08 18:46:11+07	2021-07-09 01:46:11+07
+id-8cdf9d63-1cd3-41ca-af13-efed3570c72a	Sulawesi Selatan	2021-07-08 18:46:21+07	2021-07-09 01:46:21+07
+id-eb1ab1e2-49bd-4849-8e1d-366e3d1e787a	Sumatera Selatan	2021-07-08 18:46:30+07	2021-07-09 01:46:30+07
+id-ad2b59ef-d7c7-405e-84f7-aff854e381b8	Jawa Barat	2021-07-08 18:46:40+07	2021-07-09 01:46:40+07
+id-ed4caa3f-74e3-4313-b641-3543798188fb	Kalimantan Barat	2021-07-08 18:46:50+07	2021-07-09 01:46:50+07
+id-cab0825e-0c6e-4b99-84cc-6a282bcdaa28	Nusa tenggara Barat	2021-07-08 18:47:00+07	2021-07-09 01:47:00+07
+id-f3511dc1-f76d-4c77-9e6c-e08e40f7ecce	Papua Barat	2021-07-08 18:47:08+07	2021-07-09 01:47:08+07
+id-aa7f25fa-ca81-4067-8b09-bd6af8720c51	Sulawesi Barat	2021-07-08 18:47:17+07	2021-07-09 01:47:17+07
+id-97923474-feb8-4d65-a829-08d6ad13ed2d	Sumatera Barat	2021-07-08 18:47:28+07	2021-07-09 01:47:28+07
+id-3ee9a97c-1c27-4e3a-8ef5-78e72e7d3da5	Daerah Istimewa Yogyakarta	2021-07-08 18:47:39+07	2021-07-09 01:47:39+07
+\.
+
+
+--
+-- Data for Name: religion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.religion (religion_id, religion_name, created_at, updated_at) FROM stdin;
+id-5453b407-e97b-4320-b085-9d4e3133e49f	Islam	2021-07-11 18:45:00+07	2021-07-11 18:45:03+07
+id-e7919b88-499e-4699-947c-02b5bfbe43f2	Kristen	2021-07-11 18:45:58+07	2021-07-11 18:46:01+07
+id-f70b2e87-69c7-4738-a52e-e10f431fc814	Katolik	2021-07-11 18:46:16+07	2021-07-11 18:46:19+07
+id-0f21d885-1591-4c34-842b-a91262cceaa8	Hindu	2021-07-11 18:46:48+07	2021-07-11 18:46:51+07
+id-a7723590-9a7b-48e5-93b5-2a278ef99931	Buddha	2021-07-11 18:47:03+07	2021-07-11 18:47:07+07
+id-02da47e4-38da-4b08-9f6a-8d851e599e13	Konghucu	2021-07-11 18:47:28+07	2021-07-11 18:47:31+07
+\.
+
+
+--
+-- Data for Name: school_year; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.school_year (school_year_id, school_year_value, status_school_year, created_at, updated_at) FROM stdin;
+id-5dca1dc2-969c-4693-99ae-e4559d9457ef	2022	Enable	2021-07-12 11:16:19+07	2021-07-12 11:16:22+07
+\.
+
+
+--
+-- Data for Name: source_information; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.source_information (source_id, source_information_name, source_status, created_at, updated_at) FROM stdin;
+id-06b6b05e-70c8-4e4e-ba79-2cb245c7e939	Presentasi	Enable	2021-07-12 08:42:59+07	2021-07-12 08:43:02+07
+id-efd49296-eecb-4abb-92d9-2c6ba6b81b0a	Spanduk	Enable	2021-07-12 08:43:38+07	2021-07-12 08:43:41+07
+id-34896d1a-c4b3-4f79-8e57-6165365b3584	Event	Enable	2021-07-12 08:44:08+07	2021-07-12 08:44:11+07
+id-2721926a-c9b7-4dff-ae35-2184f6881579	Radio	Enable	2021-07-12 08:44:37+07	2021-07-12 08:44:39+07
+id-5bafc0f2-4d6c-4acb-9f7d-76dd05d00eaf	Internet	Enable	2021-07-12 08:45:06+07	2021-07-12 08:45:08+07
+id-278d4fac-37ba-4203-8c9b-68ece6162fc3	Direct Mail	Enable	2021-07-12 08:46:10+07	2021-07-12 08:46:13+07
+id-f6289ff0-044e-4bd1-94c5-e311ba17f31a	Brousur	Enable	2021-07-12 08:46:56+07	2021-07-12 08:46:58+07
+id-2fec4e35-ae61-4666-b94a-c953d48b7179	Teleselling	Enable	2021-07-12 08:47:27+07	2021-07-12 08:47:30+07
+id-39dc5d7d-1fd6-460d-9871-2b4fbe52f281	Televisi	Enable	2021-07-12 08:47:59+07	2021-07-12 08:48:01+07
+id-210a1969-725a-4778-bf7b-d3d2872ffa9c	Koran / Media Cetak	Enable	2021-07-12 08:48:29+07	2021-07-12 08:48:31+07
+id-e9615a1d-d5cc-4b97-9dd7-557fdc292634	MGM	Enable	2021-07-12 08:49:02+07	2021-07-12 08:49:19+07
+id-0312aca7-c0b9-42f5-9c77-31ad752edfb5	Lain - Lain	Enable	2021-07-12 08:49:49+07	2021-07-12 08:49:51+07
+\.
+
+
+--
+-- Data for Name: sub_account; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.sub_account (sub_account_id, id_account, sub_account_value, sub_account_des, created_at, updated_at) FROM stdin;
+id-5489562e-ff41-4773-8156y-btbq5rd5rbc	id-e2j0f062-3b6b-4a8a-8e83-8cec981dc10l	5100	Gedung	2021-07-15 08:33:52+07	2021-07-15 08:33:52+07
+id-5489562e-ff41-4773-8156y-btbq5rd5rbn	id-b2e0f062-3b6b-4a8a-8e83-8cec981dc10n	4100	PMB	2021-07-15 08:33:52+07	2021-07-15 08:33:52+07
+\.
+
+
+--
+-- Data for Name: submenu; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.submenu (submenu_id, id_menu, id_path, sub_name_menu, created_at, updated_at) FROM stdin;
+id-e2010751-a434-4b5c-9s65-8fh96w9e9a4f	id-e2010751-a434-4b5c-9d6e-8d67639v9a4f	id-e2010751-a434-4b5c-9d6e-8d676d9e9a4r	Users Data	2021-08-14 16:48:01+07	2021-08-14 16:48:01+07
+id-e2010751-a434-4b5c-9s65-8f596wse9a4g	id-e2010751-a434-4b5c-9d6e-8d67639v9a4f	id-e2010751-a434-4b5c-9d6e-8d676d9e9ohr	Setting Roles	2021-08-14 16:48:01+07	2021-08-14 16:48:01+07
+id-dbd3c090-a738-4f37-ab5e-ca3383912ba3	id-040fe206-8af5-4d8a-aec0-8e81488fe7ae	id-e2010751-a434-4b8c-9t6e-8d676d9e9asr	Data Students	2021-08-18 08:35:25+07	2021-08-18 08:35:25+07
+id-b64f548c-0a72-46ff-b2be-9927d8763bba	id-3f2daecd-5063-4a2f-b7b0-2658a05b7433	id-e2010751-a434-4b5c-9d6e-8d67639v9a4v	Money Movement	2021-08-27 15:43:55+07	2021-08-27 15:43:55+07
+id-424c4203-e187-45d2-9d30-64a0b8437c38	id-040fe206-8af5-4d8a-aec0-8e81488fe7ae	id-ek04s751-a434-4b8c-9t6e-8d676d9e9asr	Prosess Test	2021-08-18 15:21:31+07	2021-08-18 15:21:31+07
+id-c78ee01c-265a-428b-9e8c-65a5e06aa6d6	id-6b66b77a-dfef-42f9-8cc1-95c2eb8d8c52	id-7dadd5de-2b0c-4d4e-bda1-5831c4c0e225	Trial balance	2021-08-25 15:58:43+07	2021-08-25 15:58:43+07
+id-ca4f711c-9c1b-4003-80f5-feeebc903815	id-6b66b77a-dfef-42f9-8cc1-95c2eb8d8c52	id-7daod5de-2b0c-4d4e-bda1-5831c4c0e22v	Ledger	2021-08-25 23:03:45+07	2021-08-25 23:03:45+07
+id-ce7a2c79-cd3a-47d9-9e29-901e24c6bae3	id-6b66b77a-dfef-42f9-8cc1-95c2eb8d8c52	id-33dcc62f-87a6-4b07-806b-d25ac907b6af	Account	2021-08-25 23:08:55+07	2021-08-25 23:08:55+07
+id-8b1faa26-2a29-41f7-9a21-0142dc26aed7	id-6b66b77a-dfef-42f9-8cc1-95c2eb8d8c52	id-24bbc46d-173f-4ae7-9541-b241da658466	Cash flow	2021-08-25 23:51:20+07	2021-08-25 23:51:20+07
+id-5dc825c3-8269-45db-8537-1a17b59eb649	id-3f2daecd-5063-4a2f-b7b0-2658a05b7433	id-e80l55v1-a434-4b8c-9t6e-8d676d9e9asd	Virtual	2021-08-27 15:42:55+07	2021-08-27 15:42:55+07
+\.
+
+
+--
+-- Data for Name: transactions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.transactions (transaction_id, id_payment, concerned_id, merchant_id, gross_amount, amount, va_number, currency, status_code, fraund_status, transaction_status, transaction_type, status_message, transaction_time, transaction_expired, signature_key, created_at, updated_at) FROM stdin;
+id-b2e0f062-3b6b-4a8a-8e83-8cec981d1109	id-5489562e-ff41-4773-8156-bb3b15fd5eb7	PMB2012021624165459	G097995640	350000.00	350000	9889564051354268	IDR	201	accept	pending	Registration	Success, Bank Transfer transaction is created	2021-07-24 17:12:59+07	2021-07-25 10:12:00+07	1c8426d3-53c5-436e-b304-c74ae9065f4d	2021-07-24 17:17:21+07	2021-07-24 17:17:21+07
+\.
+
+
+--
+-- Data for Name: user_roles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.user_roles (role_id, role, created_at, updated_at, role_status) FROM stdin;
+id-e2010751-a434-4b5c-9d6e-8d676d9e9a4f	Apps	2021-07-17 08:40:07+07	2021-08-17 21:18:02+07	Enable
+id-83e86438-ab77-4cd4-96a8-09ca08e2af7d	Student	2021-07-17 08:43:39+07	2021-08-18 08:41:59+07	Enable
+id-77a92a32-9e0c-4cb9-a91c-644591bb6eca	Education	2021-07-17 08:41:16+07	2021-08-17 21:18:07+07	Enable
+id-284e240b-8249-4fdc-82e1-c1e100c066d4	Marketing	2021-07-17 08:41:48+07	2021-08-17 21:18:07+07	Enable
+id-74b1ee29-66dd-4cab-93f6-105fcb5d632b	CNP	2021-07-17 08:42:26+07	2021-08-17 21:18:08+07	Enable
+id-97e1dc24-ce38-4ed9-bd52-666af87592cd	Finance	2021-07-17 08:40:52+07	2021-08-17 21:18:09+07	Enable
+id-9f555033-e5ed-4951-9f61-e2a4814d5666	Lecturer	2021-07-17 08:43:03+07	2021-08-17 21:18:11+07	Enable
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (user_id, username, email, password, photo, user_status, role_id, id_lecturer, id_student, created_at, updated_at, name) FROM stdin;
+id-b7b7a8ff-995e-49b9-a074-00432c82063c	usercnp	cnp@mail.com	$argon2i$v=19$m=4096,t=3,p=1$OPJ7k6fY55N5ojdDcXyGcQ$b0Vgc+Jd9F+9EQ5cj+fdLKjf2bYtRMZNa1j4Ac6t/S4	NULL	Disable	id-74b1ee29-66dd-4cab-93f6-105fcb5d632b	-	-	2021-08-18 08:43:39+07	2021-08-18 08:43:39+07	usercnp
+id-63ccef30-0aff-48a2-b60b-01f9ef1d5963	marketing	marketing@mail.com	$argon2i$v=19$m=4096,t=3,p=1$jnsXwzka4yoKZ9+yZM/RUQ$KM2SapVoz/MR9TPBhrREnrXAOv266f8bcFOqrWo2xCU	NULL	Enable	id-284e240b-8249-4fdc-82e1-c1e100c066d4	-	-	2021-07-17 08:55:22+07	2021-07-17 08:55:22+07	Anya Geraldine
+id-94be2dd7-654e-4e91-925a-10e886a14be1	education	education@mail.com	$argon2i$v=19$m=4096,t=3,p=1$jnsXwzka4yoKZ9+yZM/RUQ$KM2SapVoz/MR9TPBhrREnrXAOv266f8bcFOqrWo2xCU	NULL	Enable	id-77a92a32-9e0c-4cb9-a91c-644591bb6eca	-	-	2021-07-17 08:54:45+07	2021-07-17 08:54:45+07	Anya Geraldine
+id-1d5baf04-fe01-4896-bc6b-6b641f71ad79	finance	finance@mail.com	$argon2i$v=19$m=4096,t=3,p=1$jnsXwzka4yoKZ9+yZM/RUQ$KM2SapVoz/MR9TPBhrREnrXAOv266f8bcFOqrWo2xCU	NULL	Enable	id-97e1dc24-ce38-4ed9-bd52-666af87592cd	-	-	2021-07-17 08:54:04+07	2021-07-17 08:54:04+07	Anya Geraldine
+id-37e6c4ab-fcb2-4068-a8ea-1ec56de0571d	IT POLTEK	it@mail.com	$argon2i$v=19$m=4096,t=3,p=1$jnsXwzka4yoKZ9+yZM/RUQ$KM2SapVoz/MR9TPBhrREnrXAOv266f8bcFOqrWo2xCU	NULL	Enable	id-e2010751-a434-4b5c-9d6e-8d676d9e9a4f	-	-	2021-07-17 08:52:51+07	2021-07-17 08:52:51+07	Anya Geraldine
+\.
+
+
+--
+-- Data for Name: wave_registration; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.wave_registration (wave_registration_id, wave, wave_desc, wave_status, created_at, updated_at) FROM stdin;
+id-d6f93547-c3b3-4d1a-b46b-3b8ce49b492f	01	Gelombang 01 Januari - Maret	Enable	2021-07-11 19:07:43+07	2021-07-11 19:07:46+07
+\.
+
+
+--
+-- Name: mikro_orm_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.mikro_orm_migrations_id_seq', 58, true);
+
+
+--
+-- Name: account account_account_value_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.account
+    ADD CONSTRAINT account_account_value_unique UNIQUE (account_value);
+
+
+--
+-- Name: account account_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.account
+    ADD CONSTRAINT account_pkey PRIMARY KEY (account_id);
+
+
+--
+-- Name: auth_user_tokens auth_user_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_tokens
+    ADD CONSTRAINT auth_user_tokens_pkey PRIMARY KEY (token_id);
+
+
+--
+-- Name: auth_user_tokens auth_user_tokens_user_id_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_tokens
+    ADD CONSTRAINT auth_user_tokens_user_id_unique UNIQUE (user_id);
+
+
+--
+-- Name: class_campus class_campus_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.class_campus
+    ADD CONSTRAINT class_campus_pkey PRIMARY KEY (class_campus_id);
+
+
+--
+-- Name: classes_learning classes_learning_class_name_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.classes_learning
+    ADD CONSTRAINT classes_learning_class_name_unique UNIQUE (class_name);
+
+
+--
+-- Name: classes_learning classes_learning_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.classes_learning
+    ADD CONSTRAINT classes_learning_pkey PRIMARY KEY (class_learning_id);
+
+
+--
+-- Name: college_students college_students_nim_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.college_students
+    ADD CONSTRAINT college_students_nim_unique UNIQUE (nim);
+
+
+--
+-- Name: college_students college_students_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.college_students
+    ADD CONSTRAINT college_students_pkey PRIMARY KEY (college_student_id);
+
+
+--
+-- Name: discounts discounts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.discounts
+    ADD CONSTRAINT discounts_pkey PRIMARY KEY (discounts_id);
+
+
+--
+-- Name: district district_district_or_city_name_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.district
+    ADD CONSTRAINT district_district_or_city_name_unique UNIQUE (district_or_city_name);
+
+
+--
+-- Name: district district_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.district
+    ADD CONSTRAINT district_pkey PRIMARY KEY (district_or_city_id);
+
+
+--
+-- Name: education_list education_list_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.education_list
+    ADD CONSTRAINT education_list_pkey PRIMARY KEY (education_list_id);
+
+
+--
+-- Name: group_account group_account_group_account_value_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.group_account
+    ADD CONSTRAINT group_account_group_account_value_unique UNIQUE (group_account_value);
+
+
+--
+-- Name: group_account group_account_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.group_account
+    ADD CONSTRAINT group_account_pkey PRIMARY KEY (group_account_id);
+
+
+--
+-- Name: lecturer lecturer_no_registration_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lecturer
+    ADD CONSTRAINT lecturer_no_registration_unique UNIQUE (no_registration);
+
+
+--
+-- Name: lecturer lecturer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lecturer
+    ADD CONSTRAINT lecturer_pkey PRIMARY KEY (lecturer_id);
+
+
+--
+-- Name: lesson_timetable lesson_timetable_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lesson_timetable
+    ADD CONSTRAINT lesson_timetable_pkey PRIMARY KEY (lesson_timetable_id);
+
+
+--
+-- Name: list_majors list_majors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.list_majors
+    ADD CONSTRAINT list_majors_pkey PRIMARY KEY (list_major_id);
+
+
+--
+-- Name: list_price list_price_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.list_price
+    ADD CONSTRAINT list_price_pkey PRIMARY KEY (list_price_id);
+
+
+--
+-- Name: menu menu_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.menu
+    ADD CONSTRAINT menu_pkey PRIMARY KEY (menu_id);
+
+
+--
+-- Name: mikro_orm_migrations mikro_orm_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.mikro_orm_migrations
+    ADD CONSTRAINT mikro_orm_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mk mk_mk_name_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.mk
+    ADD CONSTRAINT mk_mk_name_unique UNIQUE (mk_name);
+
+
+--
+-- Name: mk mk_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.mk
+    ADD CONSTRAINT mk_pkey PRIMARY KEY (mk_id);
+
+
+--
+-- Name: money_movement money_movement_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.money_movement
+    ADD CONSTRAINT money_movement_pkey PRIMARY KEY (money_movement_id);
+
+
+--
+-- Name: money_movement money_movement_proof_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.money_movement
+    ADD CONSTRAINT money_movement_proof_unique UNIQUE (proof);
+
+
+--
+-- Name: pathurl pathurl_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pathurl
+    ADD CONSTRAINT pathurl_pkey PRIMARY KEY (path_url_id);
+
+
+--
+-- Name: pathurl pathurl_url_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pathurl
+    ADD CONSTRAINT pathurl_url_unique UNIQUE (url);
+
+
+--
+-- Name: payments payments_destination_name_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.payments
+    ADD CONSTRAINT payments_destination_name_unique UNIQUE (destination_name);
+
+
+--
+-- Name: payments payments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.payments
+    ADD CONSTRAINT payments_pkey PRIMARY KEY (payment_id);
+
+
+--
+-- Name: presenter presenter_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.presenter
+    ADD CONSTRAINT presenter_pkey PRIMARY KEY (presenter_id);
+
+
+--
+-- Name: profession profession_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profession
+    ADD CONSTRAINT profession_pkey PRIMARY KEY (profession_id);
+
+
+--
+-- Name: prospective_students prospective_students_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.prospective_students
+    ADD CONSTRAINT prospective_students_pkey PRIMARY KEY (prospective_students_id);
+
+
+--
+-- Name: prospective_students prospective_students_reg_code_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.prospective_students
+    ADD CONSTRAINT prospective_students_reg_code_unique UNIQUE (reg_code);
+
+
+--
+-- Name: province province_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.province
+    ADD CONSTRAINT province_pkey PRIMARY KEY (province_id);
+
+
+--
+-- Name: province province_province_name_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.province
+    ADD CONSTRAINT province_province_name_unique UNIQUE (province_name);
+
+
+--
+-- Name: religion religion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.religion
+    ADD CONSTRAINT religion_pkey PRIMARY KEY (religion_id);
+
+
+--
+-- Name: religion religion_religion_name_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.religion
+    ADD CONSTRAINT religion_religion_name_unique UNIQUE (religion_name);
+
+
+--
+-- Name: school_year school_year_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.school_year
+    ADD CONSTRAINT school_year_pkey PRIMARY KEY (school_year_id);
+
+
+--
+-- Name: source_information source_information_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.source_information
+    ADD CONSTRAINT source_information_pkey PRIMARY KEY (source_id);
+
+
+--
+-- Name: source_information source_information_source_information_name_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.source_information
+    ADD CONSTRAINT source_information_source_information_name_unique UNIQUE (source_information_name);
+
+
+--
+-- Name: sub_account sub_account_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sub_account
+    ADD CONSTRAINT sub_account_pkey PRIMARY KEY (sub_account_id);
+
+
+--
+-- Name: sub_account sub_account_sub_account_value_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sub_account
+    ADD CONSTRAINT sub_account_sub_account_value_unique UNIQUE (sub_account_value);
+
+
+--
+-- Name: submenu submenu_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.submenu
+    ADD CONSTRAINT submenu_pkey PRIMARY KEY (submenu_id);
+
+
+--
+-- Name: transactions transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.transactions
+    ADD CONSTRAINT transactions_pkey PRIMARY KEY (transaction_id);
+
+
+--
+-- Name: transactions transactions_va_number_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.transactions
+    ADD CONSTRAINT transactions_va_number_unique UNIQUE (va_number);
+
+
+--
+-- Name: user_roles user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_roles
+    ADD CONSTRAINT user_roles_pkey PRIMARY KEY (role_id);
+
+
+--
+-- Name: user_roles user_roles_role_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_roles
+    ADD CONSTRAINT user_roles_role_unique UNIQUE (role);
+
+
+--
+-- Name: users users_email_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_unique UNIQUE (email);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: users users_username_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_username_unique UNIQUE (username);
+
+
+--
+-- Name: wave_registration wave_registration_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.wave_registration
+    ADD CONSTRAINT wave_registration_pkey PRIMARY KEY (wave_registration_id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

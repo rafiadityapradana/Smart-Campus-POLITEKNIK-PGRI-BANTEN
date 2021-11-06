@@ -1,0 +1,8 @@
+mutation PublicAuthState($reg_code: String!) {
+  PublicAuth(options: { reg_code: $reg_code }) {
+    stateToken
+    errors {
+      message
+    }
+  }
+}

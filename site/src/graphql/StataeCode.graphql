@@ -1,0 +1,23 @@
+query AuthStateCode {
+  StataeCode {
+    inforeq {
+      prospective_students_id
+      reg_code
+      full_name
+      email
+      phone_number
+      religion
+      district_or_city
+      address
+      graduation_year
+      major
+      school_year
+      date_registration
+      total_investment
+    }
+    stateToken
+    error {
+      message
+    }
+  }
+}
